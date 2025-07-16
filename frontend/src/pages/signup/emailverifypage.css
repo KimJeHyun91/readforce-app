@@ -1,0 +1,28 @@
+@media (max-width: 480px) {
+  .signup-wrapper {
+    padding: 1.5rem;
+  }
+
+  .signup-title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .signup-form {
+    max-width: 100%;
+  }
+
+  .form-group input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .error-message {
+    font-size: 13px;
+  }
+}

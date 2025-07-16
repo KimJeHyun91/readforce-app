@@ -1,0 +1,73 @@
+.adaptive-result-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 3rem;
+}
+
+.adaptive-result-card {
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.lottie-animation-center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.adaptive-result-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.adaptive-result-subtext {
+  font-size: 16px;
+  margin-bottom: 1.5rem;
+  color: #444;
+}
+
+.adaptive-result-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.adaptive-result-button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+.adaptive-result-button.green {
+  background-color: #7AC1C3;
+  color: white;
+}
+
+.adaptive-result-button.yellow {
+  background-color: #7AC1C3;
+  color: black;
+}
+
+.adaptive-result-button.gray {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.adaptive-result-explanation {
+  text-align: left;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  font-size: 14px;
+}

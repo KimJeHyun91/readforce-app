@@ -1,0 +1,162 @@
+.UniversalCard-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto !important;
+  position: relative; 
+  margin-top: 20px;
+}
+
+.UniversalCard-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.UniversalCard-header {
+  position: relative;
+}
+
+.UniversalCard-title {
+  font-size: 18px;
+  font-weight: 700;
+  max-width: calc(100% - 120px);
+  margin-bottom: 8px;
+  margin-left: 10px;
+}
+
+.UniversalCard-content {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 20px 0 0 10px;
+  max-width: calc(100% - 120px);
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #454545;
+  height: auto !important;
+  max-height: none !important;
+}
+
+
+.UniversalCard-button {
+  padding: 10px 15px;
+  background-color: #a2a2a2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-end;
+  text-decoration: none;
+}
+
+.UniversalCard-button:hover {
+  background-color: #666;
+}
+
+/* 오른쪽 상단 배지 위치 */
+.UniversalCard-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 9px 16px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 12px;
+  margin: 0;
+}
+
+.UniversalCard-초급 {
+  background-color: #d1eceb;
+  color: #606060;
+}
+
+.UniversalCard-중급 {
+  background-color: #73bfb8;
+  color: #fff;
+}
+
+.UniversalCard-고급 {
+  background-color: #439395;
+  color: #fff;
+}
+
+.UniversalCard-category {
+  font-size: 15px;
+  color: #666;
+  margin: 4px 0 0 0;
+}
+
+.UniversalCard-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: 16px;
+  margin-left: 10px;
+}
+
+.UniversalCard-star {
+  position: absolute;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+
+  .UniversalCard-card {
+    padding: 18px;
+    margin-bottom: 0px;
+    height: auto;
+  }
+
+  .UniversalCard-header {
+    order: 1;               
+    margin-bottom: 6px;
+  }
+  .UniversalCard-title {
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 0;
+    word-break: break-word;
+    max-height: calc(1.4em * 3);
+    overflow: hidden;
+    max-width: 100%;   
+    width: 73%;
+  }
+
+  .UniversalCard-footer {
+    order: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .UniversalCard-category {       
+    font-size: 15px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .UniversalCard-button {          
+    padding: 6px 14px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .UniversalCard-badge {           
+    padding: 6px 12px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .UniversalCard-content { display: none; }
+}

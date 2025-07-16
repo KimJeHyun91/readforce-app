@@ -1,0 +1,31 @@
+.footer {
+  background-color: #439395;
+  padding: 20px 0 25px;
+  color: white;
+  border-top: 1px solid #ddd;
+}
+
+.footer-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.footer p {
+  margin: 4px 0;
+  font-size: 15px;
+}
+
+/* ───────── 375 px 이하 화면 전용 ───────── */
+@media (max-width: 375px) {
+  .footer {
+    padding: 0;                  /* 배경은 100 % 그대로 */
+  }
+  /* 실제 콘텐츠를 감싸는 박스 */
+  .footer .page-container {
+    max-width: 343px;            /* 375 – 16×2 */
+    padding: 16px 0;             /* 좌우 여백은 이미 16px (page-container) */
+    margin: 0 auto;              /* 가운데 정렬 */
+    box-sizing: border-box;
+  }
+}

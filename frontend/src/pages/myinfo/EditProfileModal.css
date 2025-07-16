@@ -1,0 +1,174 @@
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;  /* ← 중앙으로 조정 */
+  z-index: 999;
+  overflow: hidden;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  /* 👇 아래에서 시작해서 위로 애니메이션 */
+  transform: translateY(100px);
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.modal-content.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.button-group button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.button-group button:first-child {
+  background-color: #14b8a6;
+  color: white;
+}
+
+.button-group button:last-child {
+  background-color: #e5e7eb;
+}
+
+.profile-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.profile-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #14b8a6;
+}
+
+.profile-settings {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 16px;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+.profile-menu div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.profile-menu div:hover {
+  background-color: #f0f0f0;
+}
+
+.withdraw-button {
+  background-color: #ef4444;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 1.5rem;
+  }
+
+  .edit-form input {
+    font-size: 14px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-group button {
+    width: 100%;
+  }
+
+  .profile-section {
+    margin-bottom: 1rem;
+  }
+
+  .profile-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-settings {
+    font-size: 14px;
+    padding: 2px 5px;
+  }
+
+  .profile-menu div {
+    font-size: 14px;
+  }
+
+  .withdraw-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,262 @@
+/* 기본 설정 */
+.mypage-container {
+  padding: 40px 20px;
+  margin: 0 auto;
+  max-width: 800px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333;
+}
+
+/* 상단 레이아웃 */
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.left-top,
+.calendar-section {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* 프로필 */
+.left-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-img {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.nickname {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.badge {
+  background-color: #14b8a6;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+/* 캘린더 */
+.calendar-section h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.calendar-summary {
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.summary-title {
+  flex: 1;
+  font-weight: 600;
+  color: #555;
+}
+
+.summary-value {
+  flex: 1;
+  font-size: 16px;
+  font-weight: bold;
+  color: #4ABDAC;
+}
+
+/* 캘린더 꾸미기 */
+.react-calendar {
+  border: none;
+  width: 100%;
+  font-family: inherit;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.react-calendar__tile {
+  pointer-events: none;
+}
+
+.react-calendar__tile--now {
+  background: #e8f4f8 !important;
+  border-radius: 8px;
+}
+
+.attended-day abbr {
+  color: #4ABDAC !important;
+  font-weight: bold;
+}
+
+.react-calendar__navigation button {
+  color: black;
+  font-weight: 600;
+  background-color: white;
+}
+
+.react-calendar__month-view__weekdays__weekday:nth-child(1) {
+  color: red;
+}
+
+.saturday abbr {
+  color: black;
+}
+
+/* 하단 섹션 공통 */
+.bottom-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.learning-status-box,
+.learning-note-box {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* 각각 박스 제목 */
+.learning-status-box h4,
+.learning-note-box h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+/* 🟦 학습 현황 박스 스타일 */
+.learning-status-box .summary-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.learning-status-box .summary-card {
+  background-color: #fff;
+  padding: 14px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+/* 🟧 학습 노트 박스 스타일 */
+.learning-note-box .summary-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.learning-note-box .summary-card {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.learning-note-box .summary-card:hover {
+  transform: scale(1.02);
+}
+
+/* 모달 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  width: 50%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* ───────── 375 px 이하 – 모바일 전용 ───────── */
+@media (max-width: 375px) {
+
+  /* 1) 전체 여백 ↓ */
+  .mypage-container {
+    padding: 24px 16px;
+  }
+
+  /* 2) 상·하단 박스 세로 스택 */
+  .top-section,
+  .bottom-section {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* 3) 각 박스 폭 100 % */
+  .left-top,
+  .calendar-section,
+  .learning-status-box,
+  .learning-note-box {
+    width: 100%;
+    padding: 16px;
+  }
+
+  /* 4) 출석 현황 요약(제목/값) 1줄 가로 + 중앙 정렬 */
+  .summary-row {                     /* ← 핵심 변경 */
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .summary-title,
+  .summary-value {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* 5) 학습 노트 카드 1열 */
+  .learning-note-box .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    width: 90vw !important;
+    max-width: 350px !important;
+    padding: 16px !important;
+  }
+  
+}

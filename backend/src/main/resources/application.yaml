@@ -1,0 +1,91 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  application:
+    name: readforce
+  datasource:
+    url: ${DATABASE_URL}
+    driver-class-name: com.impossibl.postgres.jdbc.PGDriver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    redis:
+      url: ${REDIS_URL}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  jwt:
+    secret: ${JWT_SECRET_KEY}
+    access-expiration-time: 300000
+    refresh-expiration-time: 86400000
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: 
+              - email
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - account_email
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+file:
+  image:
+    profile:
+      upload-dir: ./upload/image/profile/
+      max-size: 5242880
+      max-request-size: 5MB
+      allowed-mime-types: image/jpeg,image/png,image/gif
+      default-profile-path: ./upload/image/profile/default-profile.png
+custom:
+  fronted:
+    password-reset-link-url: http://localhost:3000/resetpassword
+    social-login-success:
+      exist-member-url: http://localhost:3000/authcallback
+      new-member-url: http://localhost:3000/social-sign-up
+    logout-redirect-url: http://localhost:3000/
+    kakao-logout-url: https://kauth.kakao.com/oauth/logout?client_id=
+rate-limiting:
+  enabled: true
+  ip:
+    max-request: 100
+    per-minute: 1
+  email:
+    max-request: 100
+    per-minute: 1
+  email-verification:
+    max-request: 100
+    per-hour: 1
+gemini:
+  api:
+    key: ${GEMINI_API_KEY}
+    url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent

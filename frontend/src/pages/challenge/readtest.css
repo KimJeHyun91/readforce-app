@@ -1,0 +1,80 @@
+/* ───────── 기본 = 모바일(≤375 px) ───────── */
+.ReadTest-wrapper {
+  text-align: center;
+  padding: 3rem 16px;          /* 상 하 3rem / 좌 우 16px */
+}
+
+.ReadTest-title  { font-size: 1.35rem; font-weight: 700; color:#444; margin-bottom: 1.75rem; }
+
+.ReadTest-card {
+  background:#d3ece8;
+  padding: 1.5rem;
+  border-radius: 15px;
+  max-width: 100%;
+  margin: 0 auto 1.75rem;
+  line-height: 1.6;
+  color:#333;
+}
+.ReadTest-card h3 { font-size: 1.05rem; margin-bottom: .8rem; }
+
+/* 언어 버튼 */
+.ReadTest-language-buttons{ display:flex; justify-content:center; gap:8px; margin-bottom:1.75rem; }
+.ReadTest-lang-btn{
+  padding:.55rem 1.1rem;
+  font-size:.9rem;
+  border:1px solid #ccc;
+  border-radius:6px;
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  transition:.2s;
+}
+.ReadTest-lang-btn:hover   { background:#f2f2f2; }
+.ReadTest-lang-btn.active  { background:#e4f3f2; border:2px solid #439395; color:#439395; font-weight:700; }
+
+/* 시작 버튼 */
+.ReadTest-btn{
+  padding:.8rem 2rem;
+  font-size:1rem;
+  font-weight:700;
+  border-radius:8px;
+  border:0;
+  background:#439395;
+  color:#fff;
+  cursor:pointer;
+  transition:background .25s;
+}
+.ReadTest-btn:hover{ background:#367c7e; }
+
+
+
+/* ───────── 태블릿 이상 ≥768 px ───────── */
+@media (min-width:768px){
+  .ReadTest-wrapper   { padding:4rem 24px; }
+
+  .ReadTest-title     { font-size:1.6rem; margin-bottom:2rem; }
+
+  .ReadTest-card      { max-width: 680px; padding:2rem; }
+  .ReadTest-card h3   { font-size:1.2rem; }
+
+  .ReadTest-language-buttons{ gap:10px; margin-bottom:2rem; }
+  .ReadTest-lang-btn { font-size:.95rem; padding:.6rem 1.4rem; }
+
+  .ReadTest-btn       { font-size:1.05rem; padding:.9rem 2.4rem; }
+}
+
+
+
+/* ───────── 데스크톱 이상 ≥1024 px ───────── */
+@media (min-width:1024px){
+  .ReadTest-wrapper   { padding:4.5rem 32px; }
+
+  .ReadTest-title     { font-size:1.9rem; }
+
+  .ReadTest-card      { max-width:720px; padding:2.5rem; }
+  .ReadTest-card h3   { font-size:1.3rem; }
+
+  .ReadTest-lang-btn  { font-size:1rem; padding:.65rem 1.6rem; }
+
+  .ReadTest-btn       { font-size:1.1rem; padding:1rem 2.8rem; }
+}

@@ -1,0 +1,78 @@
+/* 전체 박스 계산 안정화 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 전체 앱 레이아웃 */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 사용자 메뉴 드롭다운 */
+.user-menu-wrapper {
+  position: relative;
+}
+
+.nickname-button {
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  padding: 8px 0;
+  z-index: 999;
+  min-width: 120px;
+}
+
+.user-dropdown div {
+  padding: 8px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.user-dropdown div:hover {
+  background-color: #f0f0f0;
+}
+
+/* 페이지 내부 공통 컨테이너 */
+.page-container {
+  width: 100%;             /* 유동 폭 */
+  max-width: 1200px;       /* PC 기준 폭 제한 */
+  margin: 0 auto;          /* 가운데 정렬 */
+  padding: 0 20px;         /* 기본 여백 */
+}
+
+/* 태블릿 이하 */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 0 16px;
+  }
+}
+
+/* 모바일 (375px 이하) */
+@media (max-width: 375px) {
+  .page-container {
+    max-width: 375px;      /* 너무 좁아지지 않게 제한 */
+    padding: 0 16px;
+  }
+}

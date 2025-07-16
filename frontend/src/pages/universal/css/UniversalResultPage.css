@@ -1,0 +1,133 @@
+.ArticleResult-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+  min-height: 60vh;
+}
+
+.ArticleResult-card {
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 4rem 3rem;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.ArticleResult-card h2 {
+  font-size: 1.8rem;
+  margin: 1.5rem 0;
+  color: #4b4b4b;
+}
+
+.ArticleResult-subtext {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #4b4b4b;
+}
+
+.ArticleResult-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 1.5rem;
+}
+
+.ArticleResult-buttons button {
+  flex: 1 1 120px;
+  max-width: 150px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s, color .2s, border-color .2s;
+  border: none;
+}
+
+.ArticleResult-buttons button:nth-child(1) {
+  background: #439395;
+  color: #fff;
+}
+.ArticleResult-buttons button:nth-child(1):hover {
+  background: #367b7d;
+}
+
+.ArticleResult-buttons button:nth-child(2) {
+  background: #fff;
+  border: 1.5px solid #7a7a7a;
+  color: #7a7a7a;
+}
+.ArticleResult-buttons button:nth-child(2):hover {
+  border: 1.5px solid #b8b8b8;
+  color: #b8b8b8;
+}
+
+.ArticleResult-buttons button:nth-child(3) {
+  background: #f3f4f6;
+  color: #4b4b4b;
+}
+.ArticleResult-buttons button:nth-child(3):hover {
+  background: #e5e7eb;
+}
+
+.ArticleResult-explanation {
+  margin-top: 2rem;
+  background: #f9fafb;
+  padding: 1rem;
+  border-left: 4px solid #439395;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #334155;
+  text-align: left;
+}
+
+.correct {
+  font-weight: 700;
+  color: #0d9488;
+}
+.incorrect {
+  color: #ef4444;
+}
+
+.solving-time-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #2c7a7b;
+}
+.clock-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.explanation-toggle-btn {
+  margin-top: .5rem;
+  padding: .35rem .9rem;
+  font-size: .85rem;
+  font-weight: 500;
+  background: transparent;
+  color: #439395;
+  border: 1px solid #439395;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color .2s, color .2s;
+  outline: none;
+}
+.explanation-toggle-btn:hover {
+  background: #439395;
+  color: #fff;
+}
+
+.explanation-text {
+  margin-top: .6rem;
+  padding: .6rem .8rem;
+  background: white;
+  border-radius: 4px;
+}

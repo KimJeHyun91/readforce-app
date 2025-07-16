@@ -1,0 +1,121 @@
+/* ───────── 기본 = 모바일(≤375 px) ───────── */
+.quiz-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 16px;
+  max-width: 100%;
+}
+
+.quiz-passage,
+.quiz-box {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+  padding: 1.25rem;
+  overflow-y: auto;
+  max-height: 90vh; /* 모바일에서 전체 화면 높이 대비 제한 */
+}
+
+/* 지문 영역 */
+.quiz-passage {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.passage-title  { font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem; }
+.passage-text   { font-size: .9rem;  line-height: 1.55; white-space: pre-line; }
+
+/* 문제 박스 */
+.question-heading { font-size: 1rem; font-weight: 700; margin-bottom: .6rem; }
+.question-text    { font-size: .9rem; font-weight: 700; margin-bottom: .8rem; }
+
+.quiz-options { display: flex; flex-direction: column; }
+.quiz-option  {
+  padding: .75rem .9rem;
+  margin-bottom: .5rem;
+  font-size: .9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: left;
+  background:#fff;
+  cursor:pointer;
+  transition:.2s;
+}
+.quiz-option:hover      { background:#e6f4f1; border-color:#0d9488; }
+.quiz-option.selected   { background:#e0f7f4; font-weight:700; border-color:#0d9488; }
+
+.quiz-button-container { margin-top: 1rem; }
+.submit-button {
+  width: 100%;
+  padding: .75rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 0;
+  border-radius: 8px;
+  background:#0d9488;
+  color:#fff;
+  cursor:pointer;
+  transition:.2s;
+}
+.submit-button:hover    { background:#0f766e; }
+.submit-button:disabled { background:#ccc;   cursor:not-allowed; }
+
+/* 10초 대기 메시지 */
+.wait-message {
+  text-align: center;
+  font-size: 16px;
+  color: #ff8800;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* ‘문제 없음’ 화면 */
+.quiz-notfound-container {
+  margin-top: 4rem;
+  padding: 1.75rem 1.25rem;
+  background:#fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,.05);
+  text-align: center;
+}
+.quiz-notfound-container .warning     { font-size: 1.1rem; font-weight:600; color:#e53935; }
+.quiz-notfound-container .description { font-size: .95rem; margin:.4rem 0 1.2rem; }
+.quiz-notfound-container .go-back-button{
+  font-size:.9rem;padding:.55rem 1.1rem;border:1px solid #ccc;background:#f5f5f5;border-radius:8px;cursor:pointer;transition:.2s;
+}
+.quiz-notfound-container .go-back-button:hover{background:#e0e0e0;}
+
+
+/* ───────── 태블릿 이상 ≥768 px ───────── */
+@media (min-width:768px){
+  .quiz-layout      { flex-direction: row; gap: 2rem; padding: 0 20px; }
+  .quiz-passage      { flex:1; max-height: 500px; overflow-y: auto; }
+  .quiz-box          { width: 40%; min-width: 280px; max-height: 500px; overflow-y: auto; }
+
+  .passage-title     { font-size: 1.15rem; }
+  .passage-text      { font-size: .95rem;  }
+
+  .question-heading  { font-size: 1.05rem; }
+  .question-text     { font-size: .95rem;  }
+  .quiz-option       { font-size: .95rem;  }
+  .submit-button     { font-size: 1.05rem; }
+}
+
+/* ───────── 데스크톱 이상 ≥1024 px ───────── */
+@media (min-width:1024px){
+  .quiz-layout      { gap: 2.5rem; padding: 0 24px; }
+  .quiz-passage      { max-height: 600px; }
+  .quiz-box          { width: 38%; min-width: 320px; max-height: 600px; padding: 1.5rem; }
+
+  .passage-title     { font-size: 1.25rem; }
+  .passage-text      { font-size: 1rem;    }
+
+  .question-heading  { font-size: 1.15rem; }
+  .question-text     { font-size: 1rem;    }
+  .quiz-option       { font-size: 1rem;    }
+  .submit-button     { font-size: 1.1rem;  }
+}

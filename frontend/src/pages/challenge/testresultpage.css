@@ -1,0 +1,58 @@
+.TestResult-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 2rem;
+  background-color: #f0fdfa;
+}
+
+.TestResult-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem 3rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.TestResult-card h2 {
+  font-size: 24px;
+  margin-bottom: 1rem;
+  color: #0f172a;
+}
+
+.TestResult-card p {
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+  color: #475569;
+}
+
+.TestResult-highlight {
+  color: #0d9488;
+  font-weight: bold;
+}
+
+.TestResult-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.TestResult-actions button {
+  padding: 0.75rem 1.5rem;
+  font-size: 14px;
+  color: white;
+  background-color: #0d9488;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.TestResult-actions button:hover {
+  background-color: #0f766e;
+}

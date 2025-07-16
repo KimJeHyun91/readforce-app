@@ -1,0 +1,58 @@
+/* ───── 기본 = 모바일(≤375 px) ───── */
+.ChallengeResultPage-container {
+  min-height: 100vh;
+  padding: 48px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #f9fafb;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.ChallengeResultPage-title {
+  font-size: 1.9rem;           /* ≈30 px */
+  font-weight: 700;
+  color: #2c7a7b;
+  margin: 0 0 1.25rem;
+}
+
+.ChallengeResultPage-score {
+  font-size: 1.25rem;          /* ≈20 px */
+  color: #343a40;
+  margin: 0 0 2rem;
+}
+
+.ChallengeResultPage-button {
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #2c7a7b;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .25s, transform .2s;
+  box-shadow: 0 3px 8px rgba(0,0,0,.10);
+}
+.ChallengeResultPage-button:hover   { background:#205e60; transform:translateY(-2px); }
+.ChallengeResultPage-button:active  { background:#1a4f4f; transform:none; }
+
+
+/* ───── 태블릿 이상 ≥768 px ───── */
+@media (min-width: 768px) {
+  .ChallengeResultPage-container { padding: 56px 24px; }
+
+  .ChallengeResultPage-title  { font-size: 2.3rem; }  /* ≈37 px */
+  .ChallengeResultPage-score  { font-size: 1.4rem; }  /* ≈22 px */
+  .ChallengeResultPage-button { font-size: 1.05rem; padding: 0.9rem 3rem; }
+}
+
+/* ───── 데스크톱 이상 ≥1024 px ───── */
+@media (min-width: 1024px) {
+  .ChallengeResultPage-container { padding: 64px 32px; }
+
+  .ChallengeResultPage-title  { font-size: 2.8rem; }  /* ≈45 px */
+  .ChallengeResultPage-score  { font-size: 1.6rem; }  /* ≈26 px */
+  .ChallengeResultPage-button { font-size: 1.15rem; padding: 1rem 3.5rem; }
+}

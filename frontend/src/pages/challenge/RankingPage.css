@@ -1,0 +1,115 @@
+.ranking-wrapper {
+  max-width: 700px;        /* 기존 600px → 더 넓게 */
+  min-height: 600px;       /* 아래로 여백 확보 */
+  margin: 3rem auto;
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border-radius: 16px;     /* 라운딩 조금 더 부드럽게 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ranking-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.ranking-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.ranking-tabs button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #e5e5e5;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.ranking-tabs button.active {
+  background-color: #439395;
+  color: #fff;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.ranking-item:hover {
+  background-color: #eef6f6;
+}
+
+.ranking-rank {
+  font-weight: bold;
+  min-width: 40px;
+}
+
+.rank-1 {
+  color: #f59e0b;
+}
+.rank-2 {
+  color: #9ca3af;
+}
+.rank-3 {
+  color: #f97316;
+}
+
+.ranking-nickname {
+  flex: 1;
+  margin-left: 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+.ranking-score {
+  font-weight: bold;
+  color: #28a745;
+}
+
+.ranking-loading,
+.ranking-error,
+.ranking-empty {
+  text-align: center;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.ranking-error {
+  color: #e74c3c;
+}
+
+@media (max-width: 480px) {
+  .ranking-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .ranking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .ranking-score {
+    align-self: flex-end;
+  }
+}

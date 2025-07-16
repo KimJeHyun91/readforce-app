@@ -1,0 +1,163 @@
+/* 로그인 박스 스타일 */
+.login-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 3rem 2rem;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/* 로그인 타이틀 */
+.login-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+/* 폼 구조 */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* 입력 필드 레이블 */
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-size: 15px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* 입력 필드 */
+.form-group input {
+  padding: 12px;
+  font-size: 15px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+  outline: none;
+}
+
+/* 링크 */
+.login-links {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 13px;
+  color: #666;
+  gap: 1rem;
+  margin-top: -1rem;
+}
+
+.login-links span {
+  cursor: pointer;
+}
+
+.login-links span:hover {
+  text-decoration: underline;
+}
+
+/* 소셜 로그인 아이콘 */
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.social-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-btn img {
+  width: 33px !important;
+  height: 33px !important;
+}
+
+/* 로그인 버튼 */
+.login-btn {
+  margin-top: 1.8rem;
+  background-color: #319690;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+  background-color: #267973;
+}
+
+/* 에러 메시지 */
+.error-message {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+@media screen and (max-width: 374px) {
+  .login-wrapper {
+    padding: 1.5rem 1.2rem;  /* 위아래 패딩 줄임 */
+    margin: 16px auto;       /* 위아래 마진 살짝 줄임 */
+    margin-top: 40px;
+  }
+
+  .login-title {
+    font-size: 22px;         /* 제목 크기 축소 */
+    margin-bottom: 2rem;
+  }
+
+  .form-group input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .social-login {
+    gap: 10px;
+    margin-top: 0.8rem;
+  }
+
+  .social-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .social-btn img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .login-btn {
+    font-size: 15px;
+    padding: 10px;
+    margin-top: 1.2rem;
+  }
+
+  .login-links {
+    font-size: 12px;
+    margin-top: -0.5rem;
+  }
+
+  .error-message {
+    font-size: 13px;
+    margin-top: -0.3rem;
+  }
+}

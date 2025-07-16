@@ -1,0 +1,135 @@
+/* ───── 공통(모바일 기준 ≤375px) ───── */
+.ChallengeStartModal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* ★ 핵심: 폭·여백을 모바일에 맞춤 */
+.ChallengeStartModal-content {
+  width: 90vw;                  /* 화면의 90% */
+  max-width: 360px;             /* 너무 커지지 않게 */
+  padding: 1.75rem 1.25rem;     /* 안쪽 여백 축소 */
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(13, 148, 136, 0.28);
+  text-align: center;
+  animation: fadeInUp 0.25s ease forwards;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ChallengeStartModal-title {
+  font-size: 1.45rem;           /* 23px */
+  font-weight: 700;
+  color: #439395;
+  margin: 0 0 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.ChallengeStartModal-option-group {
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #5d5d5d;
+}
+
+.ChallengeStartModal-option-group p { margin: 0 0 0.5rem; }
+
+.ChallengeStartModal-option-group button {
+  margin: 0.35rem 0.3rem;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  border: 2px solid #439395;
+  border-radius: 12px;
+  background: #fff;
+  color: #439395;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.ChallengeStartModal-option-group button:hover {
+  background: #439395;
+  color: #fff;
+}
+
+.ChallengeStartModal-option-group button.selected {
+  background: #439395;
+  color: #fff;
+  box-shadow: 0 0 6px #439395dd;
+}
+
+.ChallengeStartModal-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.ChallengeStartModal-actions button {
+  flex: 1;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 0;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  user-select: none;
+}
+
+.ChallengeStartModal-actions button:first-child {
+  background: #fff;
+  color: #5d5d5d;
+  border: 2px solid #cbd5e1;
+}
+
+.ChallengeStartModal-actions button:first-child:hover {
+  background: #e5e7eb;
+}
+
+.ChallengeStartModal-actions button:last-child {
+  background: #439395;
+  color: #fff;
+  box-shadow: 0 0 6px #439395dd;
+}
+
+.ChallengeStartModal-actions button:last-child:hover {
+  background: #397f80;
+}
+
+/* ───── 태블릿 이상 ≥768px ───── */
+@media (min-width: 768px) {
+  .ChallengeStartModal-content {
+    width: 400px;
+    padding: 2.25rem 1.75rem;
+  }
+
+  .ChallengeStartModal-title       { font-size: 1.75rem; }
+  .ChallengeStartModal-option-group p { font-size: 1.05rem; }
+  .ChallengeStartModal-option-group button { font-size: 1.05rem; padding: 0.65rem 1.3rem; }
+  .ChallengeStartModal-actions button { font-size: 1.05rem; }
+}
+
+/* ───── 데스크톱 이상 ≥1024px ───── */
+@media (min-width: 1024px) {
+  .ChallengeStartModal-content {
+    width: 460px;
+    padding: 2.5rem 2rem;
+  }
+
+  .ChallengeStartModal-title       { font-size: 1.9rem; }
+  .ChallengeStartModal-option-group p { font-size: 1.1rem; }
+  .ChallengeStartModal-option-group button { font-size: 1.1rem; padding: 0.75rem 1.5rem; }
+  .ChallengeStartModal-actions { gap: 1rem; }
+  .ChallengeStartModal-actions button { font-size: 1.1rem; padding: 0.85rem 0; }
+}
