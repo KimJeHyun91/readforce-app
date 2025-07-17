@@ -6,11 +6,67 @@ import api from "../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 const Main = () => {
+  const [top5Data, setTop5Data] = useState([
+  { nickname: "독서왕김리딩", score: 98.5 },
+  { nickname: "문해천재이해력", score: 95.3 },
+  { nickname: "책벌레", score: 93.7 },
+  { nickname: "뉴스읽는곰", score: 90.2 },
+  { nickname: "AI독서가", score: 88.1 },
+  { nickname: "문해탐험가", score: 86.4 },
+  { nickname: "문해고수", score: 85.0 },
+  { nickname: "이해력끝판왕", score: 83.2 },
+  { nickname: "소설매니아", score: 82.0 },
+  { nickname: "동화해석가", score: 80.5 },
+]);
+
+const [wrongArticles, setWrongArticles] = useState([
+  {
+    passageNo: 1,
+    title: "기후 위기에 대응하는 정책",
+    content: "지구온난화가 심화되면서...",
+    author: "환경부",
+    language: "KOREAN",
+    category: "NEWS",
+  },
+  {
+    passageNo: 2,
+    title: "인공지능이 바꾸는 일상",
+    content: "AI 기술은 다양한 분야에 적용되고 있다...",
+    author: "과학기술정보통신부",
+    language: "KOREAN",
+    category: "NEWS",
+  },
+  {
+    passageNo: 3,
+    title: "역사 속 경제 위기 사례",
+    content: "1929년 대공황은 세계 경제에 큰 충격을 주었다...",
+    author: "한국사연구소",
+    language: "KOREAN",
+    category: "NEWS",
+  },
+  {
+    passageNo: 4,
+    title: "자율주행차의 미래",
+    content: "자율주행차는 인간의 개입 없이 주행할 수 있다...",
+    author: "미래교통연구원",
+    language: "KOREAN",
+    category: "NEWS",
+  },
+  {
+    passageNo: 5,
+    title: "디지털 시대의 문해력",
+    content: "디지털 환경에서는 정보의 해석이 더욱 중요해진다...",
+    author: "문해력센터",
+    language: "KOREAN",
+    category: "NEWS",
+  },
+]);
+
   const [slideIndex, setSlideIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("NEWS");
-  const [top5Data, setTop5Data] = useState([]);
-  const [wrongArticles, setWrongArticles] = useState([]);
+  // const [top5Data, setTop5Data] = useState([]);
+  // const [wrongArticles, setWrongArticles] = useState([]);
   const navigate = useNavigate();
   const debounceRef = useRef(null);
 
