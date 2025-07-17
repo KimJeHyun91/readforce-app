@@ -1,22 +1,44 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// useLocation 훅을 추가로 import 합니다.
+import { useNavigate, useLocation } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 
 export default function Socialsignup() {
   const navigate = useNavigate();
-  const [tempToken, setTempToken] = useState("");
+  // location 객체를 사용하기 위해 useLocation 훅을 호출합니다.
+  const location = useLocation();
 
+  const [tempToken, setTempToken] = useState("");
   const [nickname, setNickname] = useState("");
   const [nicknameMessage, setNicknameMessage] = useState("");
   const [isNicknameValid, setIsNicknameValid] = useState(null);
-
   const [birthday, setBirthday] = useState("");
   const [birthdayMessage, setBirthdayMessage] = useState("");
   const [isBirthdayValid, setIsBirthdayValid] = useState(null);
-
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    // URL의 쿼리 파라미터 대신, location.state에서 토큰을 가져옵니다.
+    const tokenFromState = location.state?.temporalToken;
+
+    if (!tokenFromState) {
+      // 만약 state에 토큰이 없다면, 이전 버전과의 호환을 위해 URL도 확인합니다.
+      const params = new URLSearchParams(window.location.search);
+      const tokenFromUrl = params.get("TEMPORAL_TOKEN");
+
+      if (!tokenFromUrl) {
+        alert("잘못된 접근입니다. 로그인 페이지로 이동합니다.");
+        navigate("/login");
+        return;
+      }
+      setTempToken(tokenFromUrl);
+    } else {
+      setTempToken(tokenFromState);
+    }
+  }, [navigate, location.state]);
+
+  // 나머지 코드는 동일합니다.
   const checkNicknameDuplicate = async (nickname) => {
     try {
       await axiosInstance.get(`/member/nickname-check?nickname=${nickname}`);
@@ -26,24 +48,16 @@ export default function Socialsignup() {
     }
   };
 
-  // 닉네임 형식 + 중복 검사
   const validateNickname = async (value) => {
     const nicknameRegex = /^[a-zA-Z가-힣0-9]{2,12}$/;
-
     if (!nicknameRegex.test(value)) {
       setNicknameMessage("한글/영문/숫자 조합 2~12자만 사용 가능합니다.");
       setIsNicknameValid(false);
       return;
     }
-
     const isAvailable = await checkNicknameDuplicate(value);
-    if (isAvailable) {
-      setNicknameMessage("사용 가능한 닉네임입니다.");
-      setIsNicknameValid(true);
-    } else {
-      setNicknameMessage("이미 존재하는 닉네임입니다.");
-      setIsNicknameValid(false);
-    }
+    setNicknameMessage(isAvailable ? "사용 가능한 닉네임입니다." : "이미 존재하는 닉네임입니다.");
+    setIsNicknameValid(isAvailable);
   };
 
   const validateBirthday = (value) => {
@@ -53,15 +67,9 @@ export default function Socialsignup() {
       setIsBirthdayValid(false);
       return;
     }
-
     const [year, month, day] = value.split("-").map(Number);
     const date = new Date(year, month - 1, day);
-
-    if (
-      date.getFullYear() === year &&
-      date.getMonth() === month - 1 &&
-      date.getDate() === day
-    ) {
+    if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) {
       setBirthdayMessage("생년월일 입력 완료");
       setIsBirthdayValid(true);
     } else {
@@ -83,37 +91,21 @@ export default function Socialsignup() {
     validateBirthday(formatted);
   };
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("TEMPORAL_TOKEN");
-    if (!token) {
-      alert("잘못된 접근입니다.");
-      navigate("/login");
-    }
-    setTempToken(token);
-  }, [navigate]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
-
-    const birthdayRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!birthdayRegex.test(birthday)) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(birthday)) {
       setError("생년월일은 YYYY-MM-DD 형식이어야 합니다.");
       return;
     }
-
     try {
       await axiosInstance.post("/member/social-sign-up", {
         temporalToken: tempToken,
         nickname,
         birthday,
       });
-
-      setMessage(
-        "🎉 소셜 회원가입이 완료되었습니다! \n로그인 페이지로 이동합니다."
-      );
+      setMessage("🎉 소셜 회원가입이 완료되었습니다! \n로그인 페이지로 이동합니다.");
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
       const msg = err.response?.data?.message || "회원가입 실패";
@@ -145,18 +137,7 @@ export default function Socialsignup() {
                 }}
                 required
               />
-              <span
-                className="validation-message"
-                style={{
-                  color:
-                    isNicknameValid === null
-                      ? "inherit"
-                      : isNicknameValid
-                      ? "green"
-                      : "red",
-                  fontSize: "0.85rem",
-                }}
-              >
+              <span className="validation-message" style={{ color: isNicknameValid === null ? "inherit" : isNicknameValid ? "green" : "red", fontSize: "0.85rem" }}>
                 {nicknameMessage}
               </span>
             </div>
@@ -171,23 +152,11 @@ export default function Socialsignup() {
                 onChange={(e) => handleBirthdayChange(e.target.value)}
                 required
               />
-              <span
-                className="validation-message"
-                style={{
-                  color:
-                    isBirthdayValid === null
-                      ? "inherit"
-                      : isBirthdayValid
-                      ? "green"
-                      : "red",
-                  fontSize: "0.85rem",
-                }}
-              >
+              <span className="validation-message" style={{ color: isBirthdayValid === null ? "inherit" : isBirthdayValid ? "green" : "red", fontSize: "0.85rem" }}>
                 {birthdayMessage}
               </span>
             </div>
           </div>
-
           <button className="submit-btn">회원가입 완료</button>
           {error && <p className="error-message">{error}</p>}
           {message && <p className="success-message">{message}</p>}
