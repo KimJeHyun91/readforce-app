@@ -93,21 +93,21 @@ if (response.ok) {
               <button
                 type="button"
                 className="social-btn"
-                onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/kakao"}
+                onClick={() => window.location.href = process.env.REACT_APP_API_URL+"/oauth2/authorization/kakao"}
               >
                 <img src={kakaoIcon} alt="카카오" />
               </button>
               {/* <button
                 type="button"
                 className="social-btn"
-                onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/naver"}
+                onClick={() => window.location.href = process.env.REACT_APP_API_URL+"/oauth2/authorization/naver"}
               >
                 <img src={naverIcon} alt="네이버" />
               </button> */}
               <button
                 type="button"
                 className="social-btn"
-                onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google"}
+                onClick={() => window.location.href = process.env.REACT_APP_API_URL+"/oauth2/authorization/google"}
               >
                 <img src={googleIcon} alt="구글" />
               </button>

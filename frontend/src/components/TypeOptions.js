@@ -23,7 +23,7 @@ export const novelTypeOptions = [
 
 export const fairytaleTypeOptions = [
   { value: '', label: '모두' },
-  //{ value: 'SLICE_OF_LIFE', label: '삶의 조각' },
+  { value: 'SLICE_OF_LIFE', label: '생활' },
   { value: 'TRADITIONAL', label: '전래' },
   { value: 'INFORMATIONAL', label: '정보' },
 ];

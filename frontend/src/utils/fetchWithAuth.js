@@ -21,13 +21,18 @@ const processQueue = (error, newAccessToken) => {
           Authorization: `Bearer ${newAccessToken}`,
         },
       };
-      promise.resolve(fetch(promise.originalRequest.url, updatedOptions));
+      // 큐에 있던 요청도 전체 URL로 재요청합니다.
+      const fullUrl = `${process.env.REACT_APP_API_URL}${promise.originalRequest.url}`;
+      promise.resolve(fetch(fullUrl, updatedOptions));
     }
   });
   failedQueue = [];
 };
 
 export const fetchWithAuth = async (url, options = {}) => {
+  const baseURL = process.env.REACT_APP_API_URL;
+  const fullUrl = `${baseURL}${url}`; // 요청 URL을 전체 경로로 만듭니다.
+
   const accessToken = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refresh_token');
 
@@ -38,11 +43,12 @@ export const fetchWithAuth = async (url, options = {}) => {
     };
   }
 
-  let res = await fetch(url, options);
+  let res = await fetch(fullUrl, options); // 수정된 전체 URL로 요청합니다.
 
   if (res.status === 401 && refreshToken) {
     if (isRefreshing) {
       console.warn('토큰 재발급이 이미 진행 중입니다. 현재 요청을 큐에 추가합니다:', url);
+      // 큐에 추가할 때는 상대 경로 URL을 그대로 유지합니다.
       return addRequestToQueue({ url, options });
     }
 
@@ -50,7 +56,8 @@ export const fetchWithAuth = async (url, options = {}) => {
     console.log('액세스 토큰 만료. 리프레시 토큰 재발급을 시도합니다...');
 
     try {
-      const refreshRes = await fetch(`/authentication/reissue-refresh-token?refreshToken=${refreshToken}`, {
+      // 토큰 재발급 요청 URL도 전체 경로로 수정합니다.
+      const refreshRes = await fetch(`${baseURL}/authentication/reissue-refresh-token?refreshToken=${refreshToken}`, {
         method: 'POST',
       });
 
@@ -73,7 +80,8 @@ export const fetchWithAuth = async (url, options = {}) => {
             Authorization: `Bearer ${newAccessToken}`,
           },
         };
-        res = await fetch(url, retryOptions);
+        // 재시도 요청도 전체 URL로 보냅니다.
+        res = await fetch(fullUrl, retryOptions);
       } else {
         console.error('❌ RefreshToken 재발급 실패:', refreshRes.status, await refreshRes.text());
         isRefreshing = false;
@@ -101,6 +109,7 @@ export const fetchWithAuth = async (url, options = {}) => {
   return res;
 };
 
+// 아래 함수들은 fetchWithAuth를 사용하므로 별도 수정이 필요 없습니다.
 export const toggleFavoritePassage = async (passageNo, isFavorite) => {
   try {
     const res = await fetchWithAuth('/passage/change-favorite-state', {
@@ -125,7 +134,7 @@ export const toggleFavoritePassage = async (passageNo, isFavorite) => {
 export const fetchFavoritePassageList = async () => {
   const res = await fetchWithAuth('/passage/get-favorite-passage-list');
   if (!res.ok) throw new Error('즐겨찾기 목록 실패');
-  return res.json();              // [passageNo, passageNo ...]
+  return res.json();
 };
 
 export default fetchWithAuth;
