@@ -9,12 +9,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.readforce.authentication.exception.AuthenticationException;
 import com.readforce.authentication.service.AuthenticationService;
 import com.readforce.authentication.util.JwtUtil;
-import com.readforce.common.MessageCode;
 import com.readforce.common.enums.HeaderEnum;
-import com.readforce.common.enums.NameEnum;
 import com.readforce.common.enums.PrefixEnum;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,70 +27,49 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-	private final AuthenticationService authenticationService;
-	private final JwtUtil jwtUtil;
-	
-	@Override
-	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    private final AuthenticationService authenticationService;
+    private final JwtUtil jwtUtil;
 
-		final String authorizationHeader = httpServletRequest.getHeader(HeaderEnum.AUTHORIZATION.getContent());
-		
-		String username = null;
-		String accessToken = null;
-		
-		if(authorizationHeader != null && authorizationHeader.startsWith(PrefixEnum.BEARER.getContent())) {
-			
-			accessToken = authorizationHeader.substring(PrefixEnum.BEARER.getContent().length());
-			
-			try {
-				
-				username = jwtUtil.extractUsername(accessToken);
-				
-			} catch(ExpiredJwtException exception) {
-				
-				log.warn("요청된 JWT 토큰이 만료되었습니다: {}", exception.getMessage());
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
-				httpServletRequest.setAttribute(NameEnum.EXCEPTION.name(), MessageCode.ACCESS_TOKEN_EXPIRED);
+        final String authorizationHeader = request.getHeader(HeaderEnum.AUTHORIZATION.getContent());
 
-			} catch(Exception exception) {
-				
-				log.error("JWT 토큰 파싱 중 오류 발생: {}", exception.getMessage());
-				
-				httpServletRequest.setAttribute(NameEnum.EXCEPTION.name(), MessageCode.AUTHENTICATION_FAIL);
-			}
+        String username = null;
+        String accessToken = null;
 
-		}
-		
-		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			
-			UserDetails userDetails = this.authenticationService.loadUserByUsername(username);
-			
-			if(jwtUtil.isExpiredToken(accessToken)) {
-				
-				throw new AuthenticationException(MessageCode.ACCESS_TOKEN_EXPIRED);
-				
-			}
-			
-			if(jwtUtil.validateToken(accessToken, userDetails)) {
-				
-				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = 
-						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-				
-				usernamePasswordAuthenticationToken
-					.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+        if (authorizationHeader != null && authorizationHeader.startsWith(PrefixEnum.BEARER.getContent())) {
+            accessToken = authorizationHeader.substring(PrefixEnum.BEARER.getContent().length());
 
-				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-				
-			} else {
-				
-				throw new AuthenticationException(MessageCode.AUTHENTICATION_FAIL);
-				
-			}
-			
-		}
-		
-		filterChain.doFilter(httpServletRequest, httpServletResponse);
-	
-	}
-	
+            try {
+                username = jwtUtil.extractUsername(accessToken);
+            } catch (ExpiredJwtException exception) {
+                log.warn("요청된 JWT 토큰이 만료되었습니다: {}", exception.getMessage());
+            } catch (Exception exception) {
+                log.warn("JWT 토큰 파싱 중 오류 발생: {}", exception.getMessage());
+            }
+        }
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.authenticationService.loadUserByUsername(username);
+
+            if (jwtUtil.isExpiredToken(accessToken)) {
+                log.warn("만료된 JWT 토큰입니다.");
+                // ❌ 인증 정보 저장하지 않고 필터는 통과
+            } else if (jwtUtil.validateToken(accessToken, userDetails)) {
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                log.warn("유효하지 않은 JWT 토큰입니다.");
+                // ❌ 인증 정보 저장하지 않고 필터는 통과
+            }
+        }
+
+        // ✅ 토큰이 없거나 인증 실패해도 무조건 통과
+        filterChain.doFilter(request, response);
+    }
 }
