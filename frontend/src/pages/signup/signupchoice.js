@@ -14,7 +14,7 @@ const SignupChoice = () => {
       <h2 className="signup-title">Read Force 시작하기</h2>
 
       <div className="signup-card-list">
-        <button className="signup-card kakao" onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/kakao"}>
+        <button className="signup-card kakao" onClick={() => window.location.href = "https://readforce-app-production.up.railway.app/oauth2/authorization/kakao"}>
           <img src={kakaoIcon} alt="카카오" />
           <span>카카오로 가입하기</span>
         </button>
@@ -25,7 +25,7 @@ const SignupChoice = () => {
           <span className="arrow">›</span>
         </button> */}
 
-        <button className="signup-card google" onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google"}>
+        <button className="signup-card google" onClick={() => window.location.href = "https://readforce-app-production.up.railway.app/oauth2/authorization/google"}>
           <img src={googleIcon} alt="구글" />
           <span>Google로 가입하기</span>
         </button>

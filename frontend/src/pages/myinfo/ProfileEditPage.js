@@ -185,7 +185,7 @@ const ProfileEditPage = () => {
     try {
       const res = await axiosInstance.post('/auth/get-social-account-link-token');
       const state = res.data.STATE;
-      const redirectUri = `http://localhost:8080/oauth2/authorization/${provider}?state=${state}`;
+      const redirectUri = `https://readforce-app-production.up.railway.app/oauth2/authorization/${provider}?state=${state}`;
       window.location.href = redirectUri;
     } catch {
       alert('SNS 연동 요청 실패');
