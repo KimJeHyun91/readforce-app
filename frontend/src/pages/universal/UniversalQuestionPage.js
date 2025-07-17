@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import './css/UniversalQuestionPage.css';
-import api from '../../api/axiosInstance';
+import axiosInstance from '../../api/axiosInstance';
 import clockImg from '../../assets/image/clock.png';
 
 const UniversalQuestionPage = () => {
@@ -66,7 +66,7 @@ const UniversalQuestionPage = () => {
 
     setPassage(loadedPassage);
 
-    api
+    axiosInstance
       .get(`/multiple_choice/get-multiple-choice-question-list?passageNo=${loadedPassage.passageNo}`)
       .then((res) => {
         setQuizList(res.data);
@@ -83,7 +83,7 @@ const UniversalQuestionPage = () => {
     const solvingTime = Math.floor((Date.now() - startTime) / 1000);
 
     try {
-      await api.post('/learning/save-multiple-choice', {
+      await axiosInstance.post('/learning/save-multiple-choice', {
         questionNo: currentQuiz.questionNo,
         selectedIndex: selected,
         questionSolvingTime: solvingTime,

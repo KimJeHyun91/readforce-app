@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './testquestionpage.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import api from '../../api/axiosInstance';
+import axiosInstance from '../../api/axiosInstance';
 
 const TestQuestionPage = () => {
   const location = useLocation();
@@ -75,7 +75,7 @@ const TestQuestionPage = () => {
     const endpoint = endpointMap[question.category];
 
     try {
-      const res = await api.post(endpoint, payload);
+      const res = await axiosInstance.post(endpoint, payload);
 
       const submittedChoice = res.data?.choiceList?.find(c => c.choiceIndex === selected);
       if (submittedChoice?.isCorrect === true) {
