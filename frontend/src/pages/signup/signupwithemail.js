@@ -15,7 +15,7 @@ const SignupWithEmail = () => {
 
   const checkEmailDuplicate = async (value) => {
     try {
-      const response = await fetch(`/member/email-check?email=${value}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/email-check?email=${value}`);
       if (response.ok) {
         setEmailMessage('사용 가능한 이메일입니다.');
         setIsEmailValid(true);
