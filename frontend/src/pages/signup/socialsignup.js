@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-// useLocation 훅을 추가로 import 합니다.
 import { useNavigate, useLocation } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 
 export default function Socialsignup() {
   const navigate = useNavigate();
-  // location 객체를 사용하기 위해 useLocation 훅을 호출합니다.
-  const location = useLocation();
+  const location = useLocation(); // location 객체를 사용하기 위해 추가
 
   const [tempToken, setTempToken] = useState("");
+  // ... (다른 state 변수들은 그대로)
   const [nickname, setNickname] = useState("");
   const [nicknameMessage, setNicknameMessage] = useState("");
   const [isNicknameValid, setIsNicknameValid] = useState(null);
@@ -19,26 +18,26 @@ export default function Socialsignup() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    // URL의 쿼리 파라미터 대신, location.state에서 토큰을 가져옵니다.
-    const tokenFromState = location.state?.temporalToken;
+    // 1. navigate state에서 먼저 토큰을 찾아봅니다.
+    let token = location.state?.temporalToken;
 
-    if (!tokenFromState) {
-      // 만약 state에 토큰이 없다면, 이전 버전과의 호환을 위해 URL도 확인합니다.
+    // 2. state에 토큰이 없다면, URL 쿼리 파라미터에서 찾아봅니다.
+    if (!token) {
       const params = new URLSearchParams(window.location.search);
-      const tokenFromUrl = params.get("TEMPORAL_TOKEN");
-
-      if (!tokenFromUrl) {
-        alert("잘못된 접근입니다. 로그인 페이지로 이동합니다.");
-        navigate("/login");
-        return;
-      }
-      setTempToken(tokenFromUrl);
-    } else {
-      setTempToken(tokenFromState);
+      token = params.get("TEMPORAL_TOKEN");
     }
+
+    // 3. 두 방법 모두 토큰이 없다면 로그인 페이지로 보냅니다.
+    if (!token) {
+      alert("잘못된 접근입니다. 로그인 페이지로 이동합니다.");
+      navigate("/login");
+      return;
+    }
+
+    setTempToken(token);
   }, [navigate, location.state]);
 
-  // 나머지 코드는 동일합니다.
+  // ... (나머지 핸들러 및 JSX 코드는 이전과 동일)
   const checkNicknameDuplicate = async (nickname) => {
     try {
       await axiosInstance.get(`/member/nickname-check?nickname=${nickname}`);
