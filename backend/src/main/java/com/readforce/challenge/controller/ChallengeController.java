@@ -46,7 +46,7 @@ public class ChallengeController {
 			LanguageEnum language,
 			@RequestParam("category")
 			@NotNull(message = MessageCode.CATEGORY_NOT_NULL)
-			CategoryEnum category,
+			CategoryEnum category
 			// @AuthenticationPrincipal UserDetails userDetails
 			
 	){
