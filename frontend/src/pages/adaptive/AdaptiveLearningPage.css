@@ -1,4 +1,4 @@
-/* ───────── 기본 = 모바일(≤375 px) ───────── */
+/* 기본 스타일: 모바일 기준 */
 .adaptive-learning-container {
   display: flex;
   flex-direction: column;
@@ -9,32 +9,26 @@
 
 .adaptive-content-wrapper {
   width: 100%;
-  max-width: 1000px;      /* 데스크톱 한계 */
+  max-width: 1000px;
   display: flex;
-  flex-direction: column; /* 모바일은 세로 */
+  flex-direction: column;
   align-items: center;
   gap: 2rem;
 }
 
-main.adaptive-narrow {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-/* 로봇 애니메이션 */
 .robot-animation {
-  width: 180px;           /* 화면 70% 정도 */
+  width: 180px;
   max-width: 60vw;
   height: auto;
 }
 
-/* 소개 문구 */
 .adaptive-intro {
   text-align: center;
+  margin-top: 0;
 }
 
 .adaptive-intro p {
-  font-size: 1.25rem;     /* ≈20 px */
+  font-size: 1.25rem; /* ≈20px */
   line-height: 1.5;
   color: #868686;
   margin: 2px 0;
@@ -44,65 +38,92 @@ main.adaptive-narrow {
 .nickname {
   color: #439395;
   font-weight: 700;
+  font-size: 1.5rem;
 }
 
 /* 시작 버튼 */
-.start-button  { margin-top: 2.5rem; }
-.start-button a{
-  display:inline-block;
-  padding:.8rem 2.2rem;
-  font-size:1rem;
-  font-weight:700;
-  background:#888;
-  color:#fff;
-  border-radius:8px;
-  text-decoration:none;
-  transition:background .25s;
-}
-.start-button a:hover { background:#666; }
-
-
-
-/* ───────── 태블릿 이상 ≥ 768 px ───────── */
-@media (min-width:768px){
-  .adaptive-content-wrapper{
-    flex-direction: row;          /* 좌우 배치 */
-    align-items: flex-start;
-    gap: 3rem;
-  }
-
-  .robot-animation{ width:220px; max-width:none; }
-
-  .adaptive-intro{
-    text-align: left;
-    margin-left: 0;
-  }
-
-  .adaptive-intro p { font-size:1.5rem; }        /* ≈24 px */
-  .nickname        { font-size:1.5rem; }
-
-  .start-button{ margin-top:3.5rem; }
-  .start-button a{ font-size:1.05rem; padding:.9rem 2.8rem; }
+.start-button {
+  margin-top: 2.5rem;
 }
 
+.start-button a {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: #888;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.25s;
+}
+
+.start-button a:hover {
+  background: #666;
+}
+
+/* 모바일 전용 줄바꿈 */
 .mobile-only-br {
   display: none;
 }
 
-@media (max-width:375px){            /* ⏬ 새로 추가: 초소형 스마트폰 전용 */
-  .adaptive-intro p {
-    font-size: 1.5rem;              /* 약 18px 정도 */
+
+/* 태블릿/데스크탑용 (768px 이상) */
+@media (min-width: 768px) {
+  .adaptive-content-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3rem;
   }
+
+  .robot-animation {
+    width: 220px;
+    max-width: none;
+  }
+
   .adaptive-intro {
-    margin-top: 15px;     
+    text-align: left;
+    margin-left: 0;
   }
+
+  .adaptive-intro p {
+    font-size: 1.5rem;
+  }
+
+  .nickname {
+    font-size: 1.5rem;
+  }
+
+  .start-button {
+    margin-top: 3.5rem;
+  }
+
+  .start-button a {
+    font-size: 1.05rem;
+    padding: 0.9rem 2.8rem;
+  }
+}
+
+
+/* 초소형 모바일 화면용 (375px 이하) */
+@media (max-width: 375px) {
+  .adaptive-intro {
+    margin-top: 15px;
+  }
+
+  .adaptive-intro p {
+    font-size: 1.5rem;
+  }
+
   .nickname {
     font-size: 1.8rem;
   }
+
   .start-button a {
     font-size: 0.95rem;
     padding: 0.75rem 2rem;
   }
+
   .mobile-only-br {
     display: inline;
   }

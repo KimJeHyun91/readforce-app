@@ -20,7 +20,7 @@ const ChallengeStartModal = ({ onClose }) => {
 
         <div className="ChallengeStartModal-option-group">
           <p>카테고리 선택</p>
-          <button className={category === 'NEWS' ? 'selected' : ''} onClick={() => setCategory('NEWS')}>기사</button>
+          <button className={category === 'NEWS' ? 'selected' : ''} onClick={() => setCategory('NEWS')}>뉴스</button>
           <button className={category === 'NOVEL' ? 'selected' : ''} onClick={() => setCategory('NOVEL')}>소설</button>
           <button className={category === 'FAIRY_TALE' ? 'selected' : ''} onClick={() => setCategory('FAIRY_TALE')}>동화</button>
         </div>

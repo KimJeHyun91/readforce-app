@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UniversalFilterBar from './UniversalFilterBar';
 import UniversalCard from './UniversalCard';
 import './css/UniversalList.css';
-import { toggleFavoritePassage, fetchFavoritePassageList } from '../../utils/fetchWithAuth';
+import api from '../../api/axiosInstance';
 
 const UniversalList = ({
   items: initialItems = [],
@@ -15,44 +15,49 @@ const UniversalList = ({
 
   const [items, setItems] = useState([]);
 
-  /* 2️⃣ props 변경 시 state 동기화 */
+  const fetchFavoritePassageList = async () => {
+    const res = await api.get('/favorite/get-favorite-list');
+    return res.data;
+  };
+
+    const toggleFavoritePassage = async (passageNo, isFavorite) => {
+    await api.patch('/passage/change-favorite-state', {
+      passageNo,
+      isFavorite,
+    });
+  };
+
   useEffect(() => {
     const mergeFavorites = async () => {
-   try {
-     const favList = await fetchFavoritePassageList();
-     const favSet  = new Set(favList.map(f => f.passageNo));  // passageNo만 추출
-     const merged = initialItems.map((it, idx) => ({
-        ...it,
-       _uid: it.id ?? it.passageNo ?? idx,
-        isFavorite: favSet.has(it.passageNo),
-     }));
-     setItems(merged);
-   } catch (err) {
-      console.error('즐겨찾기 목록 불러오기 실패:', err);
-      // 실패하면 즐겨찾기 표시 없이
-      setItems(
-       initialItems.map((it, idx) => ({
-         ...it,
-         _uid: it.id ?? it.passageNo ?? idx,
+      try {
+        const favList = await fetchFavoritePassageList();
+        const favSet = new Set(favList.map(f => f.passageNo));
+        const merged = initialItems.map((it, idx) => ({
+          ...it,
+          _uid: it.id ?? it.passageNo ?? idx,
+          isFavorite: favSet.has(it.passageNo),
+        }));
+        setItems(merged);
+      } catch (err) {
+        console.error('즐겨찾기 목록 불러오기 실패:', err);
+        setItems(initialItems.map((it, idx) => ({
+          ...it,
+          _uid: it.id ?? it.passageNo ?? idx,
           isFavorite: false,
-        }))
-      );
-    }
-  };
-  mergeFavorites();
-}, [initialItems]);
+        })));
+      }
+    };
+    mergeFavorites();
+  }, [initialItems]);
 
   const toggleFavorite = (uid, passageNo, currentIsFav) => {
-    // 1) 화면 먼저 토글
     setItems(prev =>
       prev.map(it =>
         it._uid === uid ? { ...it, isFavorite: !it.isFavorite } : it
       )
     );
 
-    // 2) DB 저장
     toggleFavoritePassage(passageNo, !currentIsFav).catch(() => {
-      // 실패 시 롤백
       setItems(prev =>
         prev.map(it =>
           it._uid === uid ? { ...it, isFavorite: currentIsFav } : it
@@ -62,21 +67,18 @@ const UniversalList = ({
     });
   };
 
-  /* 4️⃣ 필터링 */
   const filteredItems = items.filter((item) => {
     const matchLevel = level ? item.level === Number(level) : true;
     const matchType  = type  ? item.type === type           : true;
     return matchLevel && matchType;
   });
 
-  /* 5️⃣ 정렬 */
   const sorted = [...filteredItems].sort((a, b) =>
     orderBy === 'latest'
       ? new Date(b.publishedAt) - new Date(a.publishedAt)
       : new Date(a.publishedAt) - new Date(b.publishedAt)
   );
 
-  /* 6️⃣ 페이징 계산 */
   const itemsPerPage   = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages     = Math.ceil(sorted.length / itemsPerPage);
@@ -106,13 +108,11 @@ const UniversalList = ({
       <div className="UniversalList-list">
         {paginated.length ? (
           paginated.map((item, index) => {
-            // 고유 id 없을 경우 대비용
-            const fallbackId =
-              item.id ?? item.new_passageNo ?? item.news_no ?? index;
+            const fallbackId = item.id ?? item.new_passageNo ?? item.news_no ?? index;
             return (
               <UniversalCard
                 key={fallbackId}
-                data={{ ...item, _uid: fallbackId }}   // _uid 추가
+                data={{ ...item, _uid: fallbackId }}
                 typeOptions={typeOptions}
                 onSolve={onSolve}
                 onToggleFavorite={() =>

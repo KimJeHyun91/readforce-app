@@ -48,7 +48,7 @@
 .stat-box.top5 {
   flex: 0 0 45%;
   max-width: 600px;
-  margin-right: 20px;
+  margin-right: 0px;
 }
 
 .top5 .tabs {
@@ -128,25 +128,12 @@
   color: #555;
   margin-bottom: 30px;
 }
-.hero-text button {
-  background-color: #439395;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.hero-text button:hover {
-  background-color: #2b7c7a;
-}
+
 .hero-image {
   flex: 1;
   min-width: 300px;
   max-width: 500px;
-  height: 100%;
+  height: 440px;
 }
 .hero-image img {
   width: 100%;
@@ -304,9 +291,45 @@
 }
 .stat-box.wrong-articles {
   flex: 0 0 45%;
-  max-width: 550px;
+  max-width: 600px;
   margin-right: 0;
 }
+
+/* 문해력 테스트 시작하기 버튼 - 초록 계열 */
+.btn-test {
+  background-color: #439395;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-test:hover {
+  background-color: #2b7c7a;
+}
+
+/* 책 구매하러가기 버튼 - 남색 계열 */
+.btn-book {
+  background-color: #264053;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-book:hover {
+  background-color: #1a2f3a;
+}
+
+
 @keyframes slideUpFade {
   from {
     opacity: 0;
@@ -330,7 +353,6 @@
   .hero-inner     { flex-direction: column; gap: 32px; padding: 1.5rem 1rem; }
   .hero-text h2   { font-size: 30px; margin-bottom: 24px; }
   .hero-text p    { font-size: 14px; margin-bottom: 24px; }
-  .hero-text button { font-size: 16px; padding: 0.6rem 1.2rem; }
 
   .hero-image        { width: 100%; max-width: 320px; height: 260px; display: flex; justify-content: center; align-items: center; }
   .hero-image img    { max-height: 100%; max-width: 100%; object-fit: contain; }

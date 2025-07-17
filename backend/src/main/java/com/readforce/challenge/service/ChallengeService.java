@@ -52,7 +52,9 @@ public class ChallengeService {
 	private final RateLimitingService rateLimitingService;
 	
 	@Transactional
-	public List<MultipleChoiceResponseDto> getChallengeQuestionList(LanguageEnum language, CategoryEnum category) {
+	public List<MultipleChoiceResponseDto> getChallengeQuestionList(String email, LanguageEnum language, CategoryEnum category) {
+		
+		rateLimitingService.checkChallengeAttempt(email, category, language);
 		
 		List<MultipleChoiceResponseDto> resultList = new ArrayList<>();
 		
@@ -91,7 +93,7 @@ public class ChallengeService {
 	@Transactional
 	public Double submitChallengeResult(Member member, ChallengeSubmitResultRequestDto requestDto) {
 		
-		rateLimitingService.checkDailyChallengeLimit(member.getEmail(), requestDto.getCategory(), requestDto.getLanguage());
+		rateLimitingService.incrementChallengeAttempt(member.getEmail(), requestDto.getCategory(), requestDto.getLanguage());
 
 	    double totalScore = 0.0;
 	    final long MAX_TIME_SECONDS = 1800;	
@@ -137,7 +139,6 @@ public class ChallengeService {
 	    Optional<Score> memberScoreOptional = scoreService.findByMemberAndCategoryAndLanguageWithOptional(member, category, language);
 
 	    if(memberScoreOptional.isEmpty()) {
-			// 기존 점수가 없으면 새로 생성합니다.
 	    	scoreService.createScore(
 		            member,
 		            totalScore,
@@ -146,7 +147,6 @@ public class ChallengeService {
 		    );
 			
 		} else {
-			// 기존 점수가 있으면 업데이트합니다.
 			Score memberScore = memberScoreOptional.get();
 			scoreService.updateScoreForChallenge(memberScore, totalScore);
 		}

@@ -46,11 +46,14 @@ public class ChallengeController {
 			LanguageEnum language,
 			@RequestParam("category")
 			@NotNull(message = MessageCode.CATEGORY_NOT_NULL)
-			CategoryEnum category
+			CategoryEnum category,
+			@AuthenticationPrincipal UserDetails userDetails
 			
 	){
 		
-		List<MultipleChoiceResponseDto> resultList = challengeService.getChallengeQuestionList(language, category);
+		String email = userDetails.getUsername();
+		
+		List<MultipleChoiceResponseDto> resultList = challengeService.getChallengeQuestionList(email, language, category);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resultList);
 		

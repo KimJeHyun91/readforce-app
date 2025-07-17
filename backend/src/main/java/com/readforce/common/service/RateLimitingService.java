@@ -78,8 +78,38 @@ public class RateLimitingService {
 		return currentRequest <= maxRequest;
 		
 	}
+
+	public void checkChallengeAttempt(String email, CategoryEnum category, LanguageEnum language) {
+		
+		String messageCode = getChallengeMessageCode(category, language);
+		
+		String key = PrefixEnum.CHALLENGE_LIMIT.getContent() + email + ":" + category.toString() + ":" + language.toString();
+		
+		if(redisTemplate.opsForValue().get(key) != null) {
+			
+			throw new RateLimitExceededException(messageCode);
+			
+		}
+		
+	}
 	
-	public void checkDailyChallengeLimit(String email, CategoryEnum category, LanguageEnum language) {
+	public void incrementChallengeAttempt(String email, CategoryEnum category, LanguageEnum language) {
+
+		LocalDateTime now = LocalDateTime.now();
+		
+		LocalDateTime midnignt = now.toLocalDate().plusDays(1).atStartOfDay();
+		
+		Duration durationUntilMidnight = Duration.between(now, midnignt);
+		
+		String key = PrefixEnum.CHALLENGE_LIMIT.getContent() + email + ":" + category.toString() + ":" + language.toString();
+		
+		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+		
+		valueOperations.set(key, "1", durationUntilMidnight);
+		
+	}
+
+	private String getChallengeMessageCode(CategoryEnum category, LanguageEnum language) {
 		
 		String messageCode = null;
 		 
@@ -149,25 +179,8 @@ public class RateLimitingService {
 			break;
 		
 		}
-		
-		LocalDateTime now = LocalDateTime.now();
-		
-		LocalDateTime midnignt = now.toLocalDate().plusDays(1).atStartOfDay();
-		
-		Duration durationUntilMidnight = Duration.between(now, midnignt);
-		
-		String key = PrefixEnum.CHALLENGE_LIMIT.getContent() + email + ":" + category.toString() + ":" + language.toString();
-		
-		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-		
-		if(valueOperations.get(key) != null) {
-			
-			throw new RateLimitExceededException(messageCode);
-			
-		}
-		
-		valueOperations.set(key, "1", durationUntilMidnight);
-		
+
+		return messageCode;
 	}
 	
 	public void checkAndIncrementVerificationAttempt(String email) {

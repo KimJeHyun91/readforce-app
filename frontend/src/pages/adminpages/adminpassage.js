@@ -38,6 +38,43 @@ const AdminPassage = () => {
         type: "ECONOMY",
         level: 1
     });
+    const TYPE_OPTIONS = {
+    NEWS: [
+        { value: "0", label: "정치" },
+        { value: "1", label: "경제" },
+        { value: "2", label: "사회" },
+        { value: "3", label: "문화생활" },
+        { value: "4", label: "IT과학" },
+        { value: "5", label: "세계" },
+        { value: "6", label: "스포츠" },
+        { value: "7", label: "연예" }
+    ],
+    NOVEL: [
+        { value: "8", label: "추리" },
+        { value: "9", label: "공상과학" },
+        { value: "10", label: "판타지" },
+        { value: "11", label: "로맨스" },
+        { value: "12", label: "역사" },
+        { value: "13", label: "모험" },
+        { value: "14", label: "스릴러" }
+    
+    ],
+    FAIRY_TALE: [
+        { value: "15", label: "생활" },
+        { value: "16", label: "전통" },
+        { value: "17", label: "정보" }
+    ]
+    
+};
+    const [filterLanguage, setFilterLanguage] = useState("ALL");
+    const [filterCategory, setFilterCategory] = useState("ALL");
+    const [filterLevel, setFilterLevel] = useState("ALL");
+    const [filterClassification, setFilterClassification] = useState("ALL");
+
+    useEffect(() => {
+    const defaultType = TYPE_OPTIONS[category]?.[0]?.value || "";
+    setType(defaultType);
+}, [category]);
 
     // 지문 불러오기
     useEffect(() => {
@@ -54,32 +91,33 @@ const AdminPassage = () => {
     }, []);
 
     // 테스트 지문 생성
-    const handleGenerateTestPassage = async () => {
-        setLoadingTestPassage(true);
-        try {
-            const res = await axiosInstance.post("/ai/generate-test-passage?language=KOREAN");
-            alert("성공 : " + res.data.message);
-        } catch (err) {
-            console.error(err);
-            alert("실패 : 지문 생성 중 오류가 발생했습니다.");
-        } finally {
-            setLoadingTestPassage(false);
-        }
-    };
-
-    // 테스트 문제 생성
-    const handleGenerateTestQuestion = async () => {
-        setLoadingTestQuestion(true);
-        try {
-            const res = await axiosInstance.post("/ai/generate-test-question?language=KOREAN");
-            alert("성공 : " + res.data.message);
-        } catch (err) {
-            console.error(err);
-            alert("실패 : 문제 생성 중 오류가 발생했습니다.");
-        } finally {
-            setLoadingTestQuestion(false);
-        }
-    };
+        const handleGenerateTestPassage = async () => {
+            setLoadingTestPassage(true);
+            try {
+                const res = await axiosInstance.post("/ai/generate-test-passage?language=KOREAN");
+                const message = res.data.message || "테스트 지문 생성 완료!";
+                alert("성공 : " + message);
+            } catch (err) {
+                console.error(err);
+                alert("실패 : 지문 생성 중 오류가 발생했습니다.");
+            } finally {
+                setLoadingTestPassage(false);
+            }
+        };
+        // 테스트 문제 생성 
+        const handleGenerateTestQuestion = async () => {
+            setLoadingTestQuestion(true);
+            try {
+                const res = await axiosInstance.post("/ai/generate-test-question?language=KOREAN");
+                const message = res.data.message || "테스트 문제 생성 완료!";
+                alert("성공 : " + message);
+            } catch (err) {
+                console.error(err);
+                alert("실패 : 문제 생성 중 오류가 발생했습니다.");
+            } finally {
+                setLoadingTestQuestion(false);
+            }
+        };
 
     // 일반 지문 생성
     const handleGeneratePassageWithParams = async () => {
@@ -94,7 +132,7 @@ const AdminPassage = () => {
                 count
             });
             const data = await res.data;
-            alert("성공 : " + data.message);
+            alert("일반 지문 생성 성공!");
             setShowPassageModal(false);
         } catch (err) {
             console.error(err);
@@ -110,7 +148,7 @@ const AdminPassage = () => {
         try {
             const res = await axiosInstance.post("/ai/generate-question");
             const data = await res.data;
-            alert("성공 : " + data.message);
+            alert("일반 문제 생성 성공!");
         } catch (err) {
             console.error(err);
             alert("실패 : 문제 생성 중 오류가 발생했습니다.");
@@ -194,34 +232,17 @@ const AdminPassage = () => {
                         <br /><label>카테고리:</label>
                         <select value={category} onChange={(e) => setCategory(e.target.value)}>
                             <option value="NEWS">뉴스</option>
-                            <option value="NOVEL">소설</option>
-                            <option value="FAIRY_TALE">동화</option>
-                            <option value="VOCABULARY">어휘</option>
-                            <option value="FACTUAL">사실적</option>
-                            <option value="INFERENTIAL">추론적</option>
                         </select>
 
                         <br /><label>유형:</label>
                         <select value={type} onChange={(e) => setType(e.target.value)}>
-                            <option value="POLITICS">정치</option>
-                            <option value="ECONOMY">경제</option>
-                            <option value="SOCIETY">사회</option>
-                            <option value="LIFE_AND_CULTURE">생활/문화</option>
-                            <option value="IT_AND_SCIENCE">IT/과학</option>
-                            <option value="WORLD">세계</option>
-                            <option value="SPORTS">스포츠</option>
-                            <option value="ENTERTAINMENT">연예</option>
-                            <option value="MYSTERY">미스터리</option>
-                            <option value="SCIENCE_FICTION">과학 소설</option>
-                            <option value="FANTASY">판타지</option>
-                            <option value="ROMANCE">로맨스</option>
-                            <option value="HISTORICAL">역사</option>
-                            <option value="ADVENTURE">모험</option>
-                            <option value="THRILLER">스릴러</option>
-                            <option value="SLICE_OF_LIFE">일상</option>
-                            <option value="TRADITIONAL">전통</option>
-                            <option value="INFORMATIONAL">정보성</option>
+                            {(TYPE_OPTIONS[category] || []).map(option => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
                         </select>
+
 
                         <br /><label>분류:</label>
                         <select value={classification} onChange={(e) => setClassification(e.target.value)}>
@@ -263,30 +284,30 @@ const AdminPassage = () => {
                             <option value="NEWS">뉴스</option>
                             <option value="NOVEL">소설</option>
                             <option value="FAIRY_TALE">동화</option>
-                            <option value="VOCABULARY">사전</option>
+                            <option value="VOCABULARY">어휘</option>
                             <option value="FACTUAL">사실</option>
                             <option value="INFERENTIAL">추론</option>
                         </select>
                         타입
                         <select value={newPassage.type} onChange={(e) => setNewPassage({ ...newPassage, type: e.target.value })}>
-                            <option value="1">정치</option>
-                            <option value="2">경제</option>
-                            <option value="3">사회</option>
-                            <option value="4">문화생활</option>
-                            <option value="5">IT과학</option>
-                            <option value="6">세계</option>
-                            <option value="7">스포츠</option>
-                            <option value="8">연예</option>
-                            <option value="9">추리</option>
-                            <option value="10">공상과학</option>
-                            <option value="11">판타지</option>
-                            <option value="12">로맨스</option>
-                            <option value="13">역사</option>
-                            <option value="14">모험</option>
-                            <option value="15">쓰릴러</option>
-                            <option value="16">삶의 조각</option>
-                            <option value="17">전통</option>
-                            <option value="18">정보</option>
+                            <option value="0">정치</option>
+                            <option value="1">경제</option>
+                            <option value="2">사회</option>
+                            <option value="3">문화생활</option>
+                            <option value="4">IT과학</option>
+                            <option value="5">세계</option>
+                            <option value="6">스포츠</option>
+                            <option value="7">연예</option>
+                            <option value="8">추리</option>
+                            <option value="9">공상과학</option>
+                            <option value="10">판타지</option>
+                            <option value="11">로맨스</option>
+                            <option value="12">역사</option>
+                            <option value="13">모험</option>
+                            <option value="14">스릴러</option>
+                            <option value="15">삶의 조각</option>
+                            <option value="16">전통</option>
+                            <option value="17">정보</option>
                         </select>
                         문제 종류
                         <select value={newPassage.classification} onChange={(e) => setNewPassage({ ...newPassage, classification: e.target.value })}>
@@ -331,9 +352,9 @@ const AdminPassage = () => {
                         <button style={ADMIN_BUTTONS} onClick={() => setShowPassageModal(true)} disabled={loadingPassage}>
                             {loadingPassage ? '생성 중...' : '일반 지문 생성'}
                         </button>
-                        <button style={ADMIN_BUTTONS} onClick={handleGenerateQuestion} disabled={loadingQuestion}>
+                        {/* <button style={ADMIN_BUTTONS} onClick={handleGenerateQuestion} disabled={loadingQuestion}>
                             {loadingQuestion ? '생성 중...' : '일반 문제 생성'}
-                        </button>
+                        </button> */}
                          <button style={ADMIN_BUTTONS} onClick={handleUpdateToChallenge} disabled={loadingChallenge}>
                             {loadingChallenge ? '변환 중...' : '챌린지 문제 변환'}
                         </button>
@@ -341,47 +362,107 @@ const AdminPassage = () => {
                             지문 직접 등록
                         </button>                    </div>
                 </div>
+                
                 <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "16px" }}>
-                    <thead>
+                       <thead>
                         <tr>
-                            <th style={thStyle}>번호</th>
-                            <th style={thStyle}>제목</th>
-                            <th style={thStyle}>언어</th>
-                            <th style={thStyle}>카테고리</th>
-                            <th style={thStyle}>난이도</th>
-                            <th style={thStyle}>생성일</th>
-                            <th style={thStyle}>문제유형</th>
-                            <th style={thStyle}>작성자</th>
-                            <th style={thStyle}>삭제</th>
+                            <th style={{ ...thStyle, width: "60px" }}>번호</th>
+                            <th style={{ ...thStyle, minWidth: "200px" }}>제목</th>
+                            <th style={{ ...thStyle, width: "60px", textAlign: "center" }}>언어</th>
+                            <th style={{ ...thStyle, width: "80px", textAlign: "center" }}>카테고리</th>
+                            <th style={{ ...thStyle, width: "60px", textAlign: "center" }}>난이도</th>
+                            <th style={{ ...thStyle, width: "100px", textAlign: "center" }}>생성일</th>
+                            <th style={{ ...thStyle, width: "100px", textAlign: "center" }}>문제유형</th>
+                            <th style={{ ...thStyle, width: "60px", textAlign: "center" }}>작성자</th>
+                            <th style={{ ...thStyle, width: "50px", textAlign: "center" }}>삭제</th>
                         </tr>
-                    </thead>
+                        </thead>
                     <tbody>
-                        {passageList.map((passage) => (
-                            <tr key={passage.passageNo}>
-                                <td style={tdStyle}>{passage.passageNo}</td>
-                                <td
-                                    style={{ cursor: "pointer", color: "blue", ...tdStyle }}
-                                    onClick={() => navigate(`/adminpage/passage/${passage.passageNo}`, { state: { passage } })}
-                                >
-                                    {passage.title}
-                                </td>
-                                <td style={tdStyle}>{LANGUAGE_LABELS[passage.language] || passage.language}</td>
-                                <td style={tdStyle}>{CATEGORY_LABELS[passage.category] || passage.category}</td>
-                                <td style={tdStyle}>{passage.level}</td>
-                                <td style={tdStyle}>
-                                    {passage.createdAt ? new Date(passage.createdAt).toLocaleDateString() : "-"}
-                                </td>
-                                <td style={tdStyle}>{CLASSIFICATION_LABELS[passage.classification]}</td>
-                                <td style={tdStyle}>{AUTHOR_LABELS[passage.author] || passage.author}</td>
-                                <td style={tdStyle}>
-                                    <button
-                                        onClick={() => handleDeletePassage(passage.passageNo)}
-                                        style={{ color: "red", border: "none", background: "none", cursor: "pointer" }}
-                                    >
-                                        삭제
-                                    </button>
-                                </td>
-                            </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                        <select
+                            value={filterLanguage}
+                            onChange={(e) => setFilterLanguage(e.target.value)}
+                            style={{ width: "100%" }}
+                        >
+                            <option value="ALL">전체</option>
+                            <option value="KOREAN">한국어</option>
+                            <option value="ENGLISH">영어</option>
+                            <option value="JAPANESE">일본어</option>
+                        </select>
+                        </td>
+                        <td>
+                        <select
+                            value={filterCategory}
+                            onChange={(e) => setFilterCategory(e.target.value)}
+                            style={{ width: "100%" }}
+                        >
+                            <option value="ALL">전체</option>
+                            <option value="NEWS">뉴스</option>
+                            <option value="NOVEL">소설</option>
+                            <option value="FAIRY_TALE">동화</option>
+                             <option value="VOCABULARY">어휘</option> 
+                            <option value="FACTUAL">사실</option>
+                            <option value="INFERENTIAL">추론</option>
+                        </select>
+                        </td>
+                        <td>
+                        <select
+                            value={filterLevel}
+                            onChange={(e) => setFilterLevel(e.target.value)}
+                            style={{ width: "100%" }}
+                        >
+                            <option value="ALL">전체</option>
+                            {[...Array(10)].map((_, i) => (
+                            <option key={i + 1} value={i + 1}>
+                                {i + 1}
+                            </option>
+                            ))}
+                        </select>
+                        </td>
+                        <td></td>
+                        <td>
+                        <select
+                            value={filterClassification}
+                            onChange={(e) => setFilterClassification(e.target.value)}
+                            style={{ width: "100%" }}
+                        >
+                            <option value="ALL">전체</option>
+                            <option value="NORMAL">일반</option>
+                            <option value="CHALLENGE">도전</option>
+                            <option value="TEST">테스트</option>
+                        </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    {passageList
+                        .filter(p => filterLanguage === "ALL" || p.language === filterLanguage)
+                        .filter(p => filterCategory === "ALL" || p.category === filterCategory)
+                        .filter(p => filterLevel === "ALL" || p.level === parseInt(filterLevel))
+                        .filter(p => filterClassification === "ALL" || p.classification === filterClassification)
+                        .map((passage) => (
+                        <tr key={passage.passageNo}>
+                            <td style={tdStyle}>{passage.passageNo}</td>
+                            <td style={{ ...tdStyle, color: "blue", cursor: "pointer" }} onClick={() => navigate(`/adminpage/passage/${passage.passageNo}`, { state: { passage } })}>{passage.title}</td>
+                            <td style={tdStyle}>{LANGUAGE_LABELS[passage.language]}</td>
+                            <td style={tdStyle}>{CATEGORY_LABELS[passage.category]}</td>
+                            <td style={tdStyle}>{passage.level}</td>
+                            <td style={tdStyle}>{new Date(passage.createdAt).toLocaleDateString()}</td>
+                            <td style={tdStyle}>{CLASSIFICATION_LABELS[passage.classification]}</td>
+                            <td style={tdStyle}>{AUTHOR_LABELS[passage.author] || passage.author}</td>
+                            <td style={tdStyle}>
+                            <button
+                                onClick={() => handleDeletePassage(passage.passageNo)}
+                                style={{ color: "red", border: "none", background: "none", cursor: "pointer" }}
+                            >
+                                삭제
+                            </button>
+                            </td>
+                        </tr>
                         ))}
                     </tbody>
                 </table>
@@ -391,16 +472,23 @@ const AdminPassage = () => {
 };
 
 const thStyle = {
-    border: "1px solid #ccc",
-    padding: "8px",
-    backgroundColor: "#f2f2f2",
-    textAlign: "left",
+  border: "1px solid #ccc",
+  padding: "8px",
+  backgroundColor: "#f2f2f2",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis"
 };
 
+
 const tdStyle = {
-    border: "1px solid #ddd",
-    padding: "8px",
+  border: "1px solid #ddd",
+  padding: "8px",
+  wordBreak: "break-word",     
+  whiteSpace: "normal",      
+  maxWidth: "200px",           
 };
+
 
 const backbtn = {
     marginBottom: "16px",
@@ -426,7 +514,7 @@ const CATEGORY_LABELS = {
     NEWS: "뉴스",
     NOVEL: "소설",
     FAIRY_TALE: "동화",
-    VOCABULARY: "사전",
+    VOCABULARY: "어휘",
     FACTUAL: "사실",
     INFERENTIAL: "추론"
 };

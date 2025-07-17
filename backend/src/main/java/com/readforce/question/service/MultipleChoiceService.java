@@ -128,5 +128,14 @@ public class MultipleChoiceService {
 				.orElseThrow(() -> new ResourceNotFoundException(MessageCode.MULTIPLE_CHOICE_NOT_FOUND));
 
 	}
+	
+	@Transactional
+	public void deleteQuestionByQuestionNo(Long questionNo) {
+	    boolean exists = multipleChoiceRepository.existsById(questionNo);
+	    if (!exists) {
+	        throw new ResourceNotFoundException("존재하지 않는 문제 번호입니다: " + questionNo);
+	    }
+	    multipleChoiceRepository.deleteById(questionNo);
+	}
 
 }

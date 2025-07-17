@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.readforce.passage.entity.Category;
@@ -30,7 +31,7 @@ public class ResultMetricEventService {
 	private final LevelService levelService;
 	
 	@Async
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void createResultMetricsForMember(Long resultNo) {
 
 		Result result = resultService.getResultByResultNo(resultNo);

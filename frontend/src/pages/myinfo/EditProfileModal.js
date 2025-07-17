@@ -29,17 +29,17 @@ const EditProfileModal = ({ onClose }) => {
     };
 
     const handleUploadClick = () => {
-        console.log("프로필 사진 업로드 클릭");
+
         // TODO: 파일 업로드 로직
     };
 
     const handleDeleteClick = () => {
-        console.log("프로필 사진 삭제 클릭");
+
         // TODO: 삭제 API 호출
     };
 
     const handleWithdraw = () => {
-        console.log("회원 탈퇴 버튼 클릭");
+
         // TODO: 탈퇴 API 호출
     };
 

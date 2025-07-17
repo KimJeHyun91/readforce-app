@@ -50,6 +50,27 @@ const AdminPassageDetail = () => {
         }
     };
 
+    const handleDeleteQuestion = async (questionNo) => {
+        const confirmed = window.confirm("정말로 이 문제를 삭제하시겠습니까?");
+        if (!confirmed) return;
+
+        try {
+            await axiosInstance.delete("/multiple_choice/delete", {
+                params: { questionNo }
+            });
+
+            alert("성공: 문제 삭제 완료!");
+
+            const res = await axiosInstance.get("/multiple_choice/get-multiple-choice-question-list", {
+                params: { passageNo: passage.passageNo }
+            });
+            setQuestionList(res.data);
+        } catch (err) {
+            console.error("문제 삭제 실패:", err);
+            alert("실패: 문제 삭제 중 오류가 발생했습니다.");
+        }
+    };
+
     if (!passage) {
         return <div style={containerStyle}>지문 정보를 불러오지 못했습니다.</div>;
     }
@@ -97,6 +118,20 @@ const AdminPassageDetail = () => {
                                         <p><strong>해설:</strong> {correctChoice.explanation || "없음"}</p>
                                     </div>
                                 )}
+                                <button
+                                    onClick={() => handleDeleteQuestion(q.questionNo)}
+                                    style={{
+                                        marginTop: "8px",
+                                        padding: "6px 12px",
+                                        backgroundColor: "#dc3545",
+                                        color: "white",
+                                        border: "none",
+                                        borderRadius: "4px",
+                                        cursor: "pointer"
+                                    }}
+                                >
+                                    삭제
+                                </button>
                             </div>
                         );
                     })}
@@ -153,7 +188,7 @@ const CATEGORY_LABELS = {
     NEWS: "뉴스",
     NOVEL: "소설",
     FAIRY_TALE: "동화",
-    VOCABULARY: "사전",
+    VOCABULARY: "어휘",
     FACTUAL: "사실",
     INFERENTIAL: "추론"
 };

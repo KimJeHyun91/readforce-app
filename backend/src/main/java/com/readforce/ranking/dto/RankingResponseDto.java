@@ -25,7 +25,7 @@ public class RankingResponseDto {
 		
 		this.nickname = score.getMember().getNickname();
 		this.email = score.getMember().getEmail();
-		this.score = score.getScore();
+		this.score = Math.round(score.getScore() * 100) / 100.0;
 		this.category = score.getCategory().getCategoryName().name();
 		this.language = score.getLanguage().getLanguageName().name();
 		

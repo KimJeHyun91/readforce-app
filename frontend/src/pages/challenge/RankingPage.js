@@ -28,7 +28,6 @@ const RankingPage = () => {
         });
         setRankingData(res.data);
       } catch (err) {
-        console.error('랭킹 데이터 불러오기 실패:', err);
         setError('랭킹 정보를 불러오지 못했습니다.');
       } finally {
         setIsLoading(false);
@@ -38,8 +37,10 @@ const RankingPage = () => {
     fetchRanking();
   }, [selectedCategory]);
 
-  const renderScore = (user) =>
-    user[selectedCategory.scoreKey] ?? user.score ?? 0;
+  const renderScore = (user) => {
+    const score = user[selectedCategory.scoreKey] ?? user.score ?? 0;
+      return Number(score).toFixed(1);
+    };
 
   return (
     <div className="page-container ranking-wrapper">

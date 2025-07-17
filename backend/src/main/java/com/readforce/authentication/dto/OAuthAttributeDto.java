@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+
+import com.readforce.common.MessageCode;
 import com.readforce.member.entity.Member;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +33,13 @@ public class OAuthAttributeDto {
 			
 		}
 		
-		return ofGoogle(userNameAttributeName, attributeMap);
+		if ("google".equals(registrationId)) {
+			
+	        return ofGoogle(userNameAttributeName, attributeMap);
+	        
+	    }
+		
+		throw new OAuth2AuthenticationException(MessageCode.UNSUPPORTED_SOCIAL_LOGIN);
 		
 	}
 	

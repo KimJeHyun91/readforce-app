@@ -16,12 +16,11 @@ const ProfileEditPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const hasFetchedImage = useRef(false);
-  const previewUrlRef = useRef(null); // ✅ 미리보기 URL 추적용
+  const previewUrlRef = useRef(null);
 
-  // ✅ 프로필 이미지 가져오기
   useEffect(() => {
     let objectUrl = null;
-  
+
     const fetchProfileImage = async () => {
       try {
         const res = await axiosInstance.get('/file/get-profile-image', {
@@ -30,23 +29,24 @@ const ProfileEditPage = () => {
         objectUrl = URL.createObjectURL(res.data);
         setProfileImageUrl(objectUrl);
       } catch {
-        // 🔇 어떤 에러든 기본 이미지로 fallback
         setProfileImageUrl(defaultProfileImage);
       }
     };
-  
+
     if (!hasFetchedImage.current) {
       hasFetchedImage.current = true;
       fetchProfileImage();
     }
-  
+
     return () => {
       if (objectUrl) URL.revokeObjectURL(objectUrl);
-      if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+        previewUrlRef.current = null;
+      }
     };
   }, []);
 
-  // ✅ 닉네임 중복 체크
   const checkNicknameDuplicate = async (nickname) => {
     try {
       const res = await axiosInstance.get(`/member/nickname-check?nickname=${nickname}`);
@@ -74,16 +74,16 @@ const ProfileEditPage = () => {
   const validateBirthday = (value) => {
     setBirthdayMessage('');
     const birthdayRegex = /^\d{4}-\d{2}-\d{2}$/;
-  
+
     if (!birthdayRegex.test(value)) {
       setBirthdayMessage('생년월일 형식이 올바르지 않습니다. (예: YYYY-MM-DD)');
       setIsBirthdayValid(false);
       return;
     }
-  
+
     const [year, month, day] = value.split('-').map(Number);
     const date = new Date(year, month - 1, day);
-  
+
     if (
       date.getFullYear() === year &&
       date.getMonth() === month - 1 &&
@@ -96,7 +96,6 @@ const ProfileEditPage = () => {
       setIsBirthdayValid(false);
     }
   };
-  
 
   const handleBirthdayChange = (value) => {
     const numeric = value.replace(/\D/g, '').slice(0, 8);
@@ -200,7 +199,15 @@ const ProfileEditPage = () => {
         <div className="form-group">
           <label>회원 이미지</label>
           <div className="profile-image-box">
-            <img src={profileImageUrl} alt="프로필 이미지" className="profile-image" />
+            <img
+              src={profileImageUrl}
+              alt="프로필 이미지"
+              className="profile-image"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = defaultProfileImage;
+              }}
+            />
             <input
               type="file"
               accept="image/jpeg,image/png,image/gif"

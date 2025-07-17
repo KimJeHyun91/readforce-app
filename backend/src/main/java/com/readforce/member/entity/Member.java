@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.readforce.administrator.dto.AdministratorModifyRequestDto;
 import com.readforce.common.enums.RoleEnum;
 import com.readforce.common.enums.StatusEnum;
+import com.readforce.passage.entity.FavoritePassage;
 import com.readforce.result.entity.Learning;
 import com.readforce.result.entity.Result;
 import com.readforce.result.entity.Score;
@@ -29,7 +30,6 @@ import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -98,6 +98,10 @@ public class Member {
 	@Builder.Default
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Score> scoreList = new ArrayList<>();
+	
+	@Builder.Default
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<FavoritePassage> favoritePassageList  = new ArrayList<>();
 	
 	public void changeSocialInfo(String socialProvider, String socialId) {
 		

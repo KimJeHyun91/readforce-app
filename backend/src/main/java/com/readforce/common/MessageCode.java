@@ -222,6 +222,7 @@ public final class MessageCode {
 	public static final String NICKNAME_CAN_USE = "SPE0006";
 	public static final String EMAIL_VERIFICATION_REQUIRED = "SPE0007";
 	public static final String FILE_CATEGORY_REQUIRED = "SPE0008";
+	public static final String UNSUPPORTED_SOCIAL_LOGIN = "SPE0009";
 	
 	
 	

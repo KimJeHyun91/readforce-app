@@ -1,39 +1,36 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import './signupwithemail.css';
+import "./signupwithemail.css";
+import axiosInstance from "../../api/axiosInstance";
 
 const EmailVerifyPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [code, setCode] = useState('');
-  const [error, setError] = useState('');
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
 
   const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get('email');
+  const email = queryParams.get("email");
 
   const handleVerify = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/email/verify-verification-code-for-sign-up', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, verificationCode: code })
-      });
+      const res = await axiosInstance.post(
+        "/email/verify-verification-code-for-sign-up",
+        {
+          email,
+          verificationCode: code,
+        }
+      );
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("E-mail 인증이 완료되었습니다.");
-        navigate(`/signup/signupcompletepage?email=${encodeURIComponent(email)}`);
-      } else {
-        setError(data.message || '인증에 실패했습니다.');
-      }
+      alert("E-mail 인증이 완료되었습니다.");
+      navigate(`/signup/signupcompletepage?email=${encodeURIComponent(email)}`);
     } catch (err) {
-      setError('서버 오류가 발생했습니다.');
-      console.error('이메일 인증 실패:', err);
+      const msg = err.response?.data?.message || "인증에 실패했습니다.";
+      setError(msg);
     }
   };
 

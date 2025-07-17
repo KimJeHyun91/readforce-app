@@ -38,7 +38,15 @@ const ChallengeQuizPage = () => {
       params: { language, category, type }
     })
       .then(res => setQuizzes(res.data))
-      .catch(() => alert('문제 불러오기 실패'))
+      .catch((error) => {
+        const errorCode =
+        error.response?.data?.MESSAGE_CODE || 
+        error.response?.data?.messageCode ||  
+        error.response?.data?.message;
+        const errorMessage = messageMap[errorCode] || '문제 불러오기 실패';
+        alert(errorMessage);
+        navigate('/challenge');
+      })
       .finally(() => setLoading(false));
 
     timerRef.current = setInterval(() => {
@@ -81,10 +89,12 @@ const ChallengeQuizPage = () => {
 
     try {
       const res = await api.post('/challenge/submit-challenge-result', payload);
-      alert(`오늘의 도전 완료! 점수: ${res.data.SCORE}`);
-      navigate('/challenge');
+      navigate('/challenge/result',{
+        state: {
+          finalScore: res.data.SCORE || res.data.score,
+        },
+      });
     } catch (error) {
-      console.log('🔥 error.response.data:', error.response?.data);
 
       const errorCode =
         error.response?.data?.MESSAGE_CODE || 

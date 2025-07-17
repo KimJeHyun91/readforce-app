@@ -116,7 +116,6 @@ const ReadTest = () => {
 
       navigate("/test-question", { state: { question: formattedQuestion } });
     } catch (err) {
-      console.error("문제 불러오기 실패", err);
       alert("문제를 불러오지 못했습니다.");
     }
   };

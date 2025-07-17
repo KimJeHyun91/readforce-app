@@ -1,50 +1,40 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import './resetpassword.css';
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import "./resetpassword.css";
+import axiosInstance from "../../api/axiosInstance";
 
 export default function ResetPassword() {
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token');
+  const token = queryParams.get("token");
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
     if (!token) {
-      alert('유효하지 않은 접근입니다.');
+      alert("유효하지 않은 접근입니다.");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      alert('비밀번호가 서로 다릅니다.');
+      alert("비밀번호가 서로 다릅니다.");
       return;
     }
 
     try {
-      const response = await fetch('/member/password-reset-from-link', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          temporalToken: token,
-          newPassword: newPassword,
-        }),
+      await axiosInstance.patch("/member/password-reset-from-link", {
+        temporalToken: token,
+        newPassword: newPassword,
       });
 
-      if (response.ok) {
-        alert('비밀번호가 성공적으로 재설정되었습니다.');
-        window.location.href = '/login';
-      } else {
-        const data = await response.json();
-        alert(`재설정 실패: ${data.message || '오류 발생'}`);
-      }
+      alert("비밀번호가 성공적으로 재설정되었습니다.");
+      window.location.href = "/login";
     } catch (error) {
-      console.error('비밀번호 재설정 에러:', error);
-      alert('서버 오류로 비밀번호를 재설정할 수 없습니다.');
+      const msg = error.response?.data?.message || "오류 발생";
+      alert(`재설정 실패: ${msg}`);
     }
   };
 
