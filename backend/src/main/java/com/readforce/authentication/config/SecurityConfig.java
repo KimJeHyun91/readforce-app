@@ -83,6 +83,7 @@ public class SecurityConfig {
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.oauth2Login(oauth2 -> oauth2
 					.authorizationEndpoint(auth -> auth.authorizationRequestResolver(customAuthorizationRequestResolver()))
+	                .redirectionEndpoint(redirection -> redirection.baseUri("/login/oauth2/code/*")) // ✨ 이 라인을 추가
 					.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
 					.successHandler(oAuth2AuthenticationSuccessHandler)
 			);
