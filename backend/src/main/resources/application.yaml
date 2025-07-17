@@ -10,7 +10,7 @@ spring:
     name: readforce
   datasource:
     url: ${DATABASE_URL}
-    driver-class-name: com.impossibl.postgres.jdbc.PGDriver
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: validate
