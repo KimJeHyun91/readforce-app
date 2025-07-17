@@ -1,4 +1,7 @@
 spring:
+  data:
+    redis:
+      url: ${REDIS_URL}
   servlet:
     multipart:
       max-file-size: 5MB
@@ -14,9 +17,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  data:
-    redis:
-      url: ${REDIS_URL}
   mail:
     host: smtp.gmail.com
     port: 587
