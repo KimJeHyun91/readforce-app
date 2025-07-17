@@ -77,7 +77,7 @@ custom:
     password-reset-link-url: ${FRONTEND_URL}/resetpassword
     social-login-success:
       exist-member-url: ${FRONTEND_URL}/authcallback
-      new-member-url: ${FRONTEND_URL}/member/social-sign-up
+      new-member-url: https://readforce-app-backend-production.up.railway.app/member/social-sign-up
     logout-redirect-url: ${FRONTEND_URL}/
     kakao-logout-url: https://kauth.kakao.com/oauth/logout?client_id=
 rate-limiting:
