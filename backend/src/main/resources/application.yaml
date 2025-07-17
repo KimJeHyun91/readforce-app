@@ -46,6 +46,7 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "https://readforce-app-backend-production.up.railway.app/login/oauth2/code/{registrationId}"
             scope: 
               - email
           kakao:
