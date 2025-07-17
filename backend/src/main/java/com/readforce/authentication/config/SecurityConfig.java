@@ -19,85 +19,79 @@ import com.readforce.authentication.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 
-// 이 import 문을 추가해주세요.
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtRequestFilter jwtRequestFilter;
-    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    private final ClientRegistrationRepository clientRegistrationRepository;
-    
-    @Bean
-    public OAuth2AuthorizationRequestResolver customAuthorizationRequestResolver() {
-        
-        return new CustomAuthorizationRequestResolver(
-                this.clientRegistrationRepository, "/oauth2/authorization"
-        );
-        
-    }
-    
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        
-        return authenticationConfiguration.getAuthenticationManager();      
-        
-    }
-    
-    @Bean 
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        
-        httpSecurity
-                // 👇 여기에 .cors(withDefaults())를 추가하여 CORS 설정을 활성화합니다.
-                .cors(withDefaults())
-                .csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint))
-                .authorizeHttpRequests(
-                        auth -> auth.requestMatchers(
-                                "/",
-                                "/authentication/sign-in",
-                                "/authentication/reissue-refresh-token",
-                                "/authentication/get-tokens",
-                                "/member/sign-up",
-                                "/member/social-sign-up",
-                                "/member/email-check",
-                                "/member/nickname-check",
-                                "/member/password-reset-from-link",
-                                "/email/send-verification-code-for-sign-up",
-                                "/email/verify-verification-code-for-sign-up",
-                                "/email/send-password-reset-link",
-                                "/ranking/get-ranking-list",
-                                "/learning/get-most-incorrect-passages",
-                                "/test/**",
-                                "/oauth2/**",
-                                "/passage/**"
-                        )
-                        .permitAll()
-                        .requestMatchers(
-                                "/administrator/**",
-                                "/ai/**"                                
-                        ).hasRole("ADMIN")
-                        .anyRequest()
-                        .authenticated()
-                
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(auth -> auth.authorizationRequestResolver(customAuthorizationRequestResolver()))
-                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-                        .successHandler(oAuth2AuthenticationSuccessHandler)
-                );
-        
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        
-        return httpSecurity.build();        
-        
-    }
-        
+	private final JwtRequestFilter jwtRequestFilter;
+	private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+	private final ClientRegistrationRepository clientRegistrationRepository;
+	
+	@Bean
+	public OAuth2AuthorizationRequestResolver customAuthorizationRequestResolver() {
+		
+		return new CustomAuthorizationRequestResolver(
+				this.clientRegistrationRepository, "/oauth2/authorization"
+		);
+		
+	}
+	
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		
+		return authenticationConfiguration.getAuthenticationManager();		
+		
+	}
+	
+	@Bean SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		
+		httpSecurity
+			.csrf(csrf -> csrf.disable())
+			.exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint))
+			.authorizeHttpRequests(
+					auth -> auth.requestMatchers(
+							"/**",
+							"/authentication/sign-in",
+							"/authentication/reissue-refresh-token",
+							"/authentication/get-tokens",
+				            "/member/sign-up",
+				            "/member/social-sign-up",
+				            "/member/email-check",
+				            "/member/nickname-check",
+				            "/member/password-reset-from-link",
+				            "/email/send-verification-code-for-sign-up",
+				            "/email/verify-verification-code-for-sign-up",
+				            "/email/send-password-reset-link",
+				            "/ranking/get-ranking-list",
+				            "/learning/get-most-incorrect-passages",
+				            "/test/**",
+				            "/oauth2/**",
+							"/passage/**"
+					)
+					.permitAll()
+					.requestMatchers(
+							"/administrator/**",
+							"/ai/**"							
+					).hasRole("ADMIN")
+					.anyRequest()
+					.authenticated()
+			
+			)
+			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.oauth2Login(oauth2 -> oauth2
+					.authorizationEndpoint(auth -> auth.authorizationRequestResolver(customAuthorizationRequestResolver()))
+					.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+					.successHandler(oAuth2AuthenticationSuccessHandler)
+			);
+		
+		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		
+		return httpSecurity.build();		
+		
+	}
+		
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UniversalFilterBar from './UniversalFilterBar';
 import UniversalCard from './UniversalCard';
 import './css/UniversalList.css';
-import axiosInstance from '../../api/axiosInstance';
+import api from '../../api/axiosInstance';
 
 const UniversalList = ({
   items: initialItems = [],
@@ -16,12 +16,12 @@ const UniversalList = ({
   const [items, setItems] = useState([]);
 
   const fetchFavoritePassageList = async () => {
-    const res = await axiosInstance.get('/favorite/get-favorite-list');
+    const res = await api.get('/favorite/get-favorite-list');
     return res.data;
   };
 
     const toggleFavoritePassage = async (passageNo, isFavorite) => {
-    await axiosInstance.patch('/passage/change-favorite-state', {
+    await api.patch('/passage/change-favorite-state', {
       passageNo,
       isFavorite,
     });

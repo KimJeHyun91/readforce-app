@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../../api/axiosInstance';
+import api from '../../api/axiosInstance';
 import './RankingPage.css';
 
 const categories = [
@@ -20,7 +20,7 @@ const RankingPage = () => {
       setError(null);
 
       try {
-        const res = await axiosInstance.get('/ranking/get-ranking-list', {
+        const res = await api.get('/ranking/get-ranking-list', {
           params: {
             category: selectedCategory.category,
             language: selectedCategory.language,

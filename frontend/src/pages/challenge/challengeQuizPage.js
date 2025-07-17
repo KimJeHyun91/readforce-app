@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../api/axiosInstance';
+import api from '../../api/axiosInstance';
 import './ChallengeQuizPage.css';
 
 const ChallengeQuizPage = () => {
@@ -34,7 +34,7 @@ const ChallengeQuizPage = () => {
   };
 
   useEffect(() => {
-    axiosInstance.get('/challenge/get-challenge-question-list', {
+    api.get('/challenge/get-challenge-question-list', {
       params: { language, category, type }
     })
       .then(res => setQuizzes(res.data))
@@ -88,7 +88,7 @@ const ChallengeQuizPage = () => {
     };
 
     try {
-      const res = await axiosInstance.post('/challenge/submit-challenge-result', payload);
+      const res = await api.post('/challenge/submit-challenge-result', payload);
       navigate('/challenge/result',{
         state: {
           finalScore: res.data.SCORE || res.data.score,

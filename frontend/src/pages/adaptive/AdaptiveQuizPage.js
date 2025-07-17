@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../api/axiosInstance';
+import api from '../../api/axiosInstance';
 import './AdaptiveQuizPage.css';
 import clockImg from '../../assets/image/clock.png';
 
@@ -23,7 +23,7 @@ const AdaptiveQuizPage = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const res = await axiosInstance.get('/recommend/get-recommend?language=KOREAN');
+        const res = await api.get('/recommend/get-recommend?language=KOREAN');
         const data = res.data;
 
         if (!data || !data.question || !data.choiceList) {
@@ -82,7 +82,7 @@ const AdaptiveQuizPage = () => {
     };
 
     try {
-      const res = await axiosInstance.post('/learning/save-multiple-choice', payload);
+      const res = await api.post('/learning/save-multiple-choice', payload);
 
       const isCorrect = quiz.choiceList[selectedIndex]?.isCorrect;
       const correctChoice = quiz.choiceList.find(choice => choice.isCorrect);
