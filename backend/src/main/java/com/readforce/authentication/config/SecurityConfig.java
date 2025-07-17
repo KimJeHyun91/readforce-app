@@ -72,7 +72,7 @@ public class SecurityConfig {
 				            "/oauth2/**",
 				            "/passage/**",
                                             "/administrator/**",
-                                            "/athentication/**",
+                                            "/authentication/**",
                                             "/challenge/**",
                                             "/email/**",
                                             "/file/**",
