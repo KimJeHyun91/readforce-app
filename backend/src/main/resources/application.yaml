@@ -74,11 +74,11 @@ file:
       default-profile-path: ./upload/image/profile/default-profile.png
 custom:
   fronted:
-    password-reset-link-url: ${FRONTEND_URL}/resetpassword
+    password-reset-link-url: ${FRONTED_URL}/resetpassword
     social-login-success:
-      exist-member-url: ${FRONTEND_URL}/authcallback
-      new-member-url: ${FRONTEND_URL}/social-sign-up
-    logout-redirect-url: ${FRONTEND_URL}/
+      exist-member-url: ${FRONTED_URL}/authcallback
+      new-member-url: ${FRONTED_URL}/social-sign-up
+    logout-redirect-url: ${FRONTED_URL}/
     kakao-logout-url: https://kauth.kakao.com/oauth/logout?client_id=
 rate-limiting:
   enabled: true
