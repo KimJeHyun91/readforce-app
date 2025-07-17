@@ -25,5 +25,18 @@ public class WebConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/css/**", "/image/**", "/js/**", "/error/**");
 		
 	}
+	
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(
+                        "http://localhost:3000", 
+                        "https://readforce-app-production.up.railway.app"
+                )
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
+    }
 
 }
