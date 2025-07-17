@@ -54,7 +54,7 @@ public class ChallengeService {
 	@Transactional
 	public List<MultipleChoiceResponseDto> getChallengeQuestionList(String email, LanguageEnum language, CategoryEnum category) {
 		
-		rateLimitingService.checkChallengeAttempt(email, category, language);
+		//rateLimitingService.checkChallengeAttempt(email, category, language);
 		
 		List<MultipleChoiceResponseDto> resultList = new ArrayList<>();
 		
