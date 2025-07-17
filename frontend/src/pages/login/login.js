@@ -21,7 +21,7 @@ export default function Login() {
       // =================================================================
       // 이 부분을 수정합니다! (경로에 /api 추가)
       // =================================================================
-      const res = await axiosInstance.post("/api/authentication/sign-in", {
+      const res = await axiosInstance.post("/authentication/sign-in", {
         email: id,
         password,
       });
@@ -56,7 +56,7 @@ export default function Login() {
     // =================================================================
     // 이 부분을 수정합니다! (경로에 /api 추가)
     // =================================================================
-    const socialLoginUrl = `${process.env.REACT_APP_API_URL}/api/oauth2/authorization/${provider}`;
+    const socialLoginUrl = `${process.env.REACT_APP_API_URL}/oauth2/authorization/${provider}`;
     window.location.href = socialLoginUrl;
   };
 
