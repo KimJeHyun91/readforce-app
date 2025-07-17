@@ -2,8 +2,6 @@ import './signupwithemail.css';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Modal from '../../components/modal';
-// 우리가 설정한 axios 인스턴스를 가져옵니다.
-import api from '../../api/axiosInstance'; 
 
 const SignupWithEmail = () => {
   const navigate = useNavigate();
@@ -17,17 +15,17 @@ const SignupWithEmail = () => {
 
   const checkEmailDuplicate = async (value) => {
     try {
-      // fetch 대신 api.get을 사용합니다. baseURL이 자동으로 적용됩니다.
-      // 백엔드 API 경로에 맞게 '/api/members/email-check'로 수정했습니다.
-      const response = await api.get(`/api/members/email-check?email=${value}`);
-      if (response.status === 200) {
+      const response = await fetch(`/member/email-check?email=${value}`);
+      if (response.ok) {
         setEmailMessage('사용 가능한 이메일입니다.');
         setIsEmailValid(true);
+      } else {
+        const data = await response.json();
+        setEmailMessage(data.message || '이미 사용 중인 계정입니다.');
+        setIsEmailValid(false);
       }
     } catch (err) {
-      // axios는 오류 응답을 err.response.data로 전달합니다.
-      const errorMessage = err.response?.data?.message || '이미 사용 중인 계정입니다.';
-      setEmailMessage(errorMessage);
+      setEmailMessage('이메일 확인 중 오류 발생');
       setIsEmailValid(false);
     }
   };
@@ -54,21 +52,23 @@ const SignupWithEmail = () => {
     setMessage('');
 
     try {
-      // fetch 대신 api.post를 사용합니다.
-      // 백엔드 API 경로에 맞게 '/api/email/send-verification-code-for-sign-up'로 수정했습니다.
-      const response = await api.post('/api/email/send-verification-code-for-sign-up', { email });
+      const response = await fetch('/email/send-verification-code-for-sign-up', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
-      if (response.status !== 200) {
-        throw new Error(response.data.message || '인증 이메일 전송 실패');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || '인증 이메일 전송 실패');
       }
 
       alert("입력한 E-Mail 주소로 인증번호가 전송되었습니다.");
       navigate(`/signup/emailverifypage?email=${encodeURIComponent(email)}`);
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      setMessage(`오류: ${errorMessage}`);
-      // 사용자에게 오류를 보여주기 위해 모달을 사용할 수 있습니다.
-      setModal({ open: true, title: '오류', message: errorMessage });
+      setMessage(`오류: ${error.message}`);
     }
   };
 
@@ -104,6 +104,7 @@ const SignupWithEmail = () => {
           E-Mail 인증
         </button>
       </form>
+      {/* {message && <p className="error-message">{message}</p>} */}
       {modal.open && (
         <Modal
           title={modal.title}

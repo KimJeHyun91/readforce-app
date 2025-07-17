@@ -50,6 +50,9 @@ import AdaptiveQuizPage from './pages/adaptive/AdaptiveQuizPage';
 import AdaptiveResultPage from './pages/adaptive/AdaptiveResultPage';
 
 function App() {
+
+  console.log("BAKED-IN API URL:", process.env.REACT_APP_API_URL);
+
   return (
     <Router>
       <Routes>
