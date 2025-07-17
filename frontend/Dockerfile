@@ -1,3 +1,5 @@
+# Cache bust: 2025-07-17 11:31
+
 # 1. 빌드 환경: Node.js 이미지를 사용하여 React 앱을 빌드
 FROM node:18-alpine as builder
 WORKDIR /app
