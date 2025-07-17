@@ -187,6 +187,7 @@
   .TestQuestion-article-box {
     height: auto;
     max-height: 300px;
+    min-width: 310px;
   }
 
   .TestQuestion-right-container {
