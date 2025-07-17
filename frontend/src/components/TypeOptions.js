@@ -16,7 +16,7 @@ export const novelTypeOptions = [
   { value: 'SCIENCE_FICTION', label: '과학' },
   { value: 'FANTASY', label: '판타지' },
   { value: 'ROMANCE', label: '로맨스' },
-  { value: 'HISTORY', label: '역사' },
+  { value: 'HISTORICAL', label: '역사' },
   { value: 'ADVENTURE', label: '모험' },
   { value: 'THRILLER', label: '스릴러' },
 ];
