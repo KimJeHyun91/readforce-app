@@ -27,13 +27,16 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 	
 	@Override
-  public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**") // 모든 URL 패턴 허용
-            .allowedOrigins("*") // 모든 Origin 허용 (운영 환경에선 제한 권장)
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-            .allowedHeaders("*")
-            .allowCredentials(false) // true면 allowedOrigins에 * 사용 못함
-            .maxAge(3600);
-  }
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**") // API 요청 경로 패턴
+                .allowedOrigins(
+                    "http://localhost:3000", // 로컬 개발용 프론트엔드 주소
+                    "https://your-frontend-domain.up.railway.app" // ⚠️ 실제 배포된 프론트엔드 주소로 변경!
+                )
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS") // ❗ OPTIONS를 반드시 포함해야 합니다.
+                .allowedHeaders("*") // 모든 종류의 헤더를 허용합니다.
+                .allowCredentials(true) // 쿠키 및 인증 정보를 포함한 요청을 허용합니다.
+                .maxAge(3600);
+    }
 
 }
