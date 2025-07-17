@@ -1,15 +1,18 @@
-# Dockerfile
 # 1. 빌드 환경: Node.js 이미지를 사용하여 React 앱을 빌드
 FROM node:18-alpine as builder
 WORKDIR /app
+
+# package.json과 package-lock.json 파일을 복사
 COPY package.json .
-COPY yarn.lock .
-RUN yarn install
+COPY package-lock.json .
+
+# npm을 사용하여 의존성 설치
+RUN npm install
+
 COPY . .
-# 환경 변수를 참조하여 빌드
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
-RUN yarn build
+
+# npm을 사용하여 빌드
+RUN npm run build
 
 # 2. 실행 환경: Nginx 이미지를 사용하여 정적 파일을 서빙
 FROM nginx:stable-alpine

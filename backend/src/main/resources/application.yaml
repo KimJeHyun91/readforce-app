@@ -68,11 +68,11 @@ file:
       default-profile-path: ./upload/image/profile/default-profile.png
 custom:
   fronted:
-    password-reset-link-url: http://localhost:3000/resetpassword
+    password-reset-link-url: ${FRONTEND_URL}/resetpassword
     social-login-success:
-      exist-member-url: http://localhost:3000/authcallback
-      new-member-url: http://localhost:3000/social-sign-up
-    logout-redirect-url: http://localhost:3000/
+      exist-member-url: ${FRONTEND_URL}/authcallback
+      new-member-url: ${FRONTEND_URL}/social-sign-up
+    logout-redirect-url: ${FRONTEND_URL}/
     kakao-logout-url: https://kauth.kakao.com/oauth/logout?client_id=
 rate-limiting:
   enabled: true
