@@ -37,6 +37,7 @@ const SignupChoice = () => {
             <img src={googleIcon} alt="구글" />
             <span>Google로 가입하기</span>
           </button>
+          
 
           <button className="signup-card email" onClick={() => navigate("/signup")}>
             <img src={emailIcon} alt="이메일" />
