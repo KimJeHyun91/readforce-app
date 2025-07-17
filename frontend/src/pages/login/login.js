@@ -90,7 +90,7 @@ export default function Login() {
                 className="social-btn"
                 onClick={() =>
                   (window.location.href =
-                    "http://localhost:8080/oauth2/authorization/kakao")
+                    "http://readforce-app-backend-production.up.railway.app/oauth2/authorization/kakao")
                 }
               >
                 <img src={kakaoIcon} alt="카카오" />
@@ -107,7 +107,7 @@ export default function Login() {
                 className="social-btn"
                 onClick={() =>
                   (window.location.href =
-                    "http://localhost:8080/oauth2/authorization/google")
+                    "http://readforce-app-backend-production.up.railway.app/oauth2/authorization/google")
                 }
               >
                 <img src={googleIcon} alt="구글" />
