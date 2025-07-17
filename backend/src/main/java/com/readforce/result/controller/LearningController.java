@@ -32,21 +32,21 @@ public class LearningController {
 	
 	private final LearningService learningService;
 	
-	// @PostMapping("/save-multiple-choice")
-	// public ResponseEntity<Map<String, String>> saveMultipleChoice(
-	// 		@Valid @RequestBody LearningMultipleChoiceRequestDto learningMultipleChoiceRequestDto,
-	// 		@AuthenticationPrincipal UserDetails userDetails
-	// ){
+	@PostMapping("/save-multiple-choice")
+	public ResponseEntity<Map<String, String>> saveMultipleChoice(
+			// @Valid @RequestBody LearningMultipleChoiceRequestDto learningMultipleChoiceRequestDto,
+			// @AuthenticationPrincipal UserDetails userDetails
+	){
 		
-	// 	String email = userDetails.getUsername();
+		// String email = userDetails.getUsername();
 		
-	// 	learningService.saveMuiltipleChoice(email, learningMultipleChoiceRequestDto);
+		// learningService.saveMuiltipleChoice(email, learningMultipleChoiceRequestDto);
 		
-	// 	return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-	// 			MessageCode.MESSAGE_CODE, MessageCode.SAVE_MULTIPLE_CHOICE_RESULT_SUCCESS
-	// 	));
+		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+				MessageCode.MESSAGE_CODE, MessageCode.SAVE_MULTIPLE_CHOICE_RESULT_SUCCESS
+		));
 		
-	// }
+	}
 	
 	@GetMapping("/get-total-learning")
 	public ResponseEntity<List<QuestionSummaryResponseDto>> getTotalLearning(
