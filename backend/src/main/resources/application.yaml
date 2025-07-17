@@ -76,8 +76,8 @@ custom:
   fronted:
     password-reset-link-url: ${FRONTED_URL}/resetpassword
     social-login-success:
-      exist-member-url: ${FRONTED_URL}/authcallback
-      new-member-url: ${FRONTED_URL}/social-sign-up
+      exist-member-url: ${FRONTED_URL}/#/authcallback
+      new-member-url: ${FRONTED_URL}/#/social-sign-up
     logout-redirect-url: ${FRONTED_URL}/
     kakao-logout-url: https://kauth.kakao.com/oauth/logout?client_id=
 rate-limiting:

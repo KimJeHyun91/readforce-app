@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// react-router-dom에서 BrowserRouter 대신 HashRouter를 가져옵니다.
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Main from "./pages/main";
 import MyPage from './pages/myinfo/MyPage';
@@ -16,7 +17,6 @@ import Socialsignup from './pages/signup/socialsignup';
 import Login from "./pages/login/login";
 import FindPassword from "./pages/login/findpassword";
 import ResetPassword from "./pages/login/resetpassword";
-// import Oauth2redirect from './pages/login/oauth2redirect';
 import Authcallback from './pages/login/authcallback';
 import ProfileEditPage from './pages/myinfo/ProfileEditPage';
 import ChangePasswordPage from './pages/myinfo/ChangePasswordPage';
@@ -24,7 +24,6 @@ import ReadTest from './pages/challenge/readtest';
 import ChallengePage from "./pages/challenge/challengepage";
 import AdminPage from './pages/adminpages/adminpage';
 import ChallengeQuizPage from './pages/challenge/challengeQuizPage';
-// import AdminNews from './pages/adminpages/adminnews';
 import AdminNewsDetail from './pages/adminpages/adminnewsdetail';
 import AdminLiterature from './pages/adminpages/adminliterature';
 import AdminLiteratureDetail from './pages/adminpages/adminliteraturedetail';
@@ -39,7 +38,6 @@ import AdminClassificationEdit from './pages/adminpages/AdminClassificationEdit'
 import AdminLanguagePage from './pages/adminpages/AdminLanguagePage';
 import AdminLevelEdit from './pages/adminpages/adminLevelEdit';
 import AdminAgeGroup from './pages/adminpages/AdminAgeGroup';
-
 import TestQuestionPage from './pages/challenge/testquestionpage';
 import TestResultPage from './pages/challenge/testresultpage';
 import TestReviewPage from './pages/challenge/testreviewpage';
@@ -51,6 +49,7 @@ import AdaptiveResultPage from './pages/adaptive/AdaptiveResultPage';
 
 function App() {
   return (
+    // Router 컴포넌트는 HashRouter로 동작하게 됩니다.
     <Router>
       <Routes>
         <Route element={<LayOut />}>
@@ -73,7 +72,6 @@ function App() {
           <Route path="/signup/emailverifypage" element={<EmailVerifyPage />} />
           <Route path="/signup/signupcompletepage" element={<SignupCompletePage />} />
           <Route path="/challenge" element={<ChallengePage />} />
-          {/* <Route path="/oauth2/redirect" element={<Oauth2redirect />} /> */}
           <Route path="/authcallback" element={<Authcallback />} />
           <Route path="/social-sign-up" element={<Socialsignup />} />
           <Route path="/profile-edit" element={<ProfileEditPage />} />
