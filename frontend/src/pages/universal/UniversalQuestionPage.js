@@ -72,8 +72,8 @@ const UniversalQuestionPage = () => {
         setQuizList(res.data);
       })
       .catch((err) => {
-        console.error('퀴즈 로딩 중 오류:', err);
-        setError("퀴즈 로딩 중 오류 발생");
+        alert("로그인 해주세요.");
+        navigate("/login");
       });
   }, [id, location.state]);
 
