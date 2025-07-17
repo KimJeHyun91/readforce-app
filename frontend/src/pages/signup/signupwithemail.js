@@ -19,7 +19,7 @@ const SignupWithEmail = () => {
     try {
       // fetch 대신 api.get을 사용합니다. baseURL이 자동으로 적용됩니다.
       // 백엔드 API 경로에 맞게 '/api/members/email-check'로 수정했습니다.
-      const response = await api.get(`/api/members/email-check?email=${value}`);
+      const response = await api.get(`/member/email-check?email=${value}`);
       if (response.status === 200) {
         setEmailMessage('사용 가능한 이메일입니다.');
         setIsEmailValid(true);
@@ -56,7 +56,7 @@ const SignupWithEmail = () => {
     try {
       // fetch 대신 api.post를 사용합니다.
       // 백엔드 API 경로에 맞게 '/api/email/send-verification-code-for-sign-up'로 수정했습니다.
-      const response = await api.post('/api/email/send-verification-code-for-sign-up', { email });
+      const response = await api.post('/email/send-verification-code-for-sign-up', { email });
 
       if (response.status !== 200) {
         throw new Error(response.data.message || '인증 이메일 전송 실패');
