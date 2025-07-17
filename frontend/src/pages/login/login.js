@@ -18,7 +18,10 @@ export default function Login() {
     setError("");
 
     try {
-      const res = await axiosInstance.post("/authentication/sign-in", {
+      // =================================================================
+      // 이 부분을 수정합니다! (경로에 /api 추가)
+      // =================================================================
+      const res = await axiosInstance.post("/api/authentication/sign-in", {
         email: id,
         password,
       });
@@ -47,6 +50,14 @@ export default function Login() {
       const msg = err.response?.data?.message || "로그인에 실패했습니다.";
       setError(msg);
     }
+  };
+
+  const handleSocialLogin = (provider) => {
+    // =================================================================
+    // 이 부분을 수정합니다! (경로에 /api 추가)
+    // =================================================================
+    const socialLoginUrl = `${process.env.REACT_APP_API_URL}/api/oauth2/authorization/${provider}`;
+    window.location.href = socialLoginUrl;
   };
 
   return (
@@ -88,27 +99,15 @@ export default function Login() {
               <button
                 type="button"
                 className="social-btn"
-                onClick={() =>
-                  (window.location.href =
-                    process.env.REACT_APP_API_URL+"/oauth2/authorization/kakao")
-                }
+                onClick={() => handleSocialLogin('kakao')}
               >
                 <img src={kakaoIcon} alt="카카오" />
               </button>
-              {/* <button
-                type="button"
-                className="social-btn"
-                onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/naver"}
-              >
-                <img src={naverIcon} alt="네이버" />
-              </button> */}
+              {/* <button type="button" ... /> */}
               <button
                 type="button"
                 className="social-btn"
-                onClick={() =>
-                  (window.location.href =
-                    process.env.REACT_APP_API_URL+"/oauth2/authorization/google")
-                }
+                onClick={() => handleSocialLogin('google')}
               >
                 <img src={googleIcon} alt="구글" />
               </button>
