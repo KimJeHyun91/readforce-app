@@ -93,7 +93,7 @@ public class ChallengeService {
 	@Transactional
 	public Double submitChallengeResult(Member member, ChallengeSubmitResultRequestDto requestDto) {
 		
-		rateLimitingService.incrementChallengeAttempt(member.getEmail(), requestDto.getCategory(), requestDto.getLanguage());
+		//rateLimitingService.incrementChallengeAttempt(member.getEmail(), requestDto.getCategory(), requestDto.getLanguage());
 
 	    double totalScore = 0.0;
 	    final long MAX_TIME_SECONDS = 1800;	

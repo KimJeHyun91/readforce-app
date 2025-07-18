@@ -64,11 +64,13 @@ public class ChallengeController {
 	@PostMapping("/submit-challenge-result")
 	public ResponseEntity<Map<String, Double>> submitChallengeResult(
 			@Valid @RequestBody ChallengeSubmitResultRequestDto requestDto,
-			@AuthenticationPrincipal UserDetails userDetails
+			// @AuthenticationPrincipal UserDetails userDetails
 	){
-		String email = userDetails.getUsername();
+		// String email = userDetails.getUsername();
 		
-		Member member = memberService.getActiveMemberByEmail(email);
+		// Member member = memberService.getActiveMemberByEmail(email);
+
+		Member member = new Member();
 		
 		Double totalScore = challengeService.submitChallengeResult(member, requestDto);
 		
