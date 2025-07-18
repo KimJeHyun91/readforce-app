@@ -63,7 +63,7 @@ public class ChallengeController {
 	
 	@PostMapping("/submit-challenge-result")
 	public ResponseEntity<Map<String, Double>> submitChallengeResult(
-			@Valid @RequestBody ChallengeSubmitResultRequestDto requestDto,
+			@Valid @RequestBody ChallengeSubmitResultRequestDto requestDto
 			// @AuthenticationPrincipal UserDetails userDetails
 	){
 		// String email = userDetails.getUsername();
