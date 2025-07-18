@@ -91,7 +91,7 @@ public class ChallengeService {
 	}
 
 	@Transactional
-	public Double submitChallengeResult(Member member, ChallengeSubmitResultRequestDto requestDto) {
+	public Double submitChallengeResult(ChallengeSubmitResultRequestDto requestDto) {
 		
 		//rateLimitingService.incrementChallengeAttempt(member.getEmail(), requestDto.getCategory(), requestDto.getLanguage());
 

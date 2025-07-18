@@ -70,9 +70,9 @@ public class ChallengeController {
 		
 		// Member member = memberService.getActiveMemberByEmail(email);
 
-		Member member = new Member();
 		
-		Double totalScore = challengeService.submitChallengeResult(member, requestDto);
+		
+		Double totalScore = challengeService.submitChallengeResult(requestDto);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
 				NameEnum.SCORE.name(), totalScore
