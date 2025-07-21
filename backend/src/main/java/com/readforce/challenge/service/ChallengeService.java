@@ -131,25 +131,6 @@ public class ChallengeService {
 
 	   
 	    totalScore = Math.round(totalScore * 10.0) / 10.0;
-
-	    Category category = categoryService.getCategoryByCategory(requestDto.getCategory());
-	    
-	    Language language = languageService.getLangeageByLanguage(requestDto.getLanguage());
-	    
-	    Optional<Score> memberScoreOptional = scoreService.findByMemberAndCategoryAndLanguageWithOptional(member, category, language);
-
-	    if(memberScoreOptional.isEmpty()) {
-	    	scoreService.createScore(
-		            member,
-		            totalScore,
-		            category,
-		            language
-		    );
-			
-		} else {
-			Score memberScore = memberScoreOptional.get();
-			scoreService.updateScoreForChallenge(memberScore, totalScore);
-		}
 	    
 	    return totalScore;
 	    
